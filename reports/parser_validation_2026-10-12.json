@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-12",
+  "parser": "sort_import.py 2.2.0 adapted as parser_engine",
+  "files": [
+    {
+      "file": "NewPrice_21_07_2026.xls",
+      "source_rows": 4597,
+      "products": 4204,
+      "components": 75,
+      "sets": 33,
+      "review": 30,
+      "price_min": 0.1,
+      "price_max": 610.0,
+      "giant_prices": 0
+    },
+    {
+      "file": "на 17.07.xls",
+      "source_rows": 1785,
+      "products": 1784,
+      "components": 42,
+      "sets": 21,
+      "review": 12,
+      "price_min": 0.98,
+      "price_max": 690.0,
+      "giant_prices": 0
+    },
+    {
+      "file": "Прайс лист на 15 Июля.xlsx",
+      "source_rows": 1202,
+      "products": 1193,
+      "components": 22,
+      "sets": 13,
+      "review": 27,
+      "price_min": 0.5,
+      "price_max": 250.0,
+      "giant_prices": 0
+    },
+    {
+      "file": "Прайс лист на 15 Июля(1).xlsx",
+      "source_rows": 1202,
+      "products": 1193,
+      "components": 22,
+      "sets": 13,
+      "review": 27,
+      "price_min": 0.5,
+      "price_max": 250.0,
+      "giant_prices": 0
+    },
+    {
+      "file": "PRICELIST CLEOPATRA 20.07.2026.xlsx",
+      "source_rows": 1317,
+      "products": 1316,
+      "components": 82,
+      "sets": 37,
+      "review": 10,
+      "price_min": 1.6,
+      "price_max": 650.0,
+      "giant_prices": 0
+    }
+  ],
+  "total_products": 9690,
+  "total_source_rows": 10103,
+  "total_components": 243
+}

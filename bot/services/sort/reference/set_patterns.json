@@ -1,0 +1,99 @@
+{
+  "version": "2.0.0",
+  "set_markers": [
+    "\\bset\\b",
+    "\\bнабор\\w*\\b",
+    "\\bcoffret\\b",
+    "\\bgift\\s*set\\b",
+    "\\bкомплект\\w*\\b",
+    "\\bkit\\b"
+  ],
+  "pack_count_patterns": [
+    "(?P<qty>\\d+)\\s*[xхX×*]\\s*(?P<volume>\\d+(?:[.,]\\d+)?)\\s*(?P<unit>ml|мл)\\b"
+  ],
+  "component_separators": [
+    "\\s*\\+\\s*",
+    "\\s*;\\s*"
+  ],
+  "name_list_separators": [
+    "\\s*\\+\\s*",
+    "\\s*,\\s*",
+    "\\s+и\\s+"
+  ],
+  "inheritance": {
+    "bare_volume_inherits_previous_type": true,
+    "untyped_fragrance_component_inherits_parent_name": true,
+    "component_brand_defaults_to_parent_brand": true,
+    "if_named_component_count_matches_pack_count_assign_one_each": true
+  },
+  "known_patterns_from_supplied_files": [
+    {
+      "pattern": "name + volume + name + volume",
+      "example": "... 100 ml + body lotion 30 ml",
+      "handling": "split by plus; parse each component independently"
+    },
+    {
+      "pattern": "name + volume + bare volume + SET",
+      "example": "Q EDP 100 ML + 10 ML SET",
+      "handling": "second component inherits parent fragrance type and name"
+    },
+    {
+      "pattern": "Nxvolume plus parenthesized names",
+      "example": "Anna Sui Set 5 x 5 ml (Fantasia + Sky + Sundae...)",
+      "handling": "map each listed name to one vial if count matches N"
+    },
+    {
+      "pattern": "parenthesized comma-separated perfume names",
+      "example": "Juliette Has A Gun SET EDP 5 x 10 ml (Pear Inc, Lust For Sun, Not A Perfume, Miami, Ode To Dullness)",
+      "handling": "one component per listed fragrance"
+    },
+    {
+      "pattern": "multi-brand set list",
+      "example": "... XS Pour Elle 5 ml + Balmain Vent Vert 5 ml + Loris Azzaro Oh La La 3 ml",
+      "handling": "recognize each named component; do not assign parent brand to all children"
+    },
+    {
+      "pattern": "explicit set word but no itemization",
+      "example": "... Coffret",
+      "handling": "retain parent; mark set contents unknown for review"
+    },
+    {
+      "pattern": "volume plus without spaces",
+      "example": "ARMANI STRONGER WITH YOU INTENSELY (M) SET EDP 100 ML +15ML",
+      "handling": "split on plus even if the second volume has no separating whitespace; the bare second volume inherits parent fragrance name/type"
+    }
+  ],
+  "do_not_split_words": [
+    "and",
+    "&"
+  ],
+  "manual_review_conditions": [
+    "set marker but no component list/count",
+    "multiple product types without clear component boundaries",
+    "named component count differs from pack count"
+  ],
+  "plus_spacing_variants": [
+    "100 ML +15ML",
+    "100 ml+ 15 ml",
+    "100ml+15ml"
+  ],
+  "set_marker_policy": {
+    "strong_markers": [
+      "набор",
+      "coffret",
+      "gift set",
+      "комплект",
+      "kit"
+    ],
+    "bare_set_requires_structure": true,
+    "do_not_classify_name_only_set_examples": [
+      "The Smart Set U EDP 1.5 ml VIAL"
+    ],
+    "set_structure_evidence": [
+      "at least two component volumes separated by plus/semicolon",
+      "named component list in parentheses matching a multipack count",
+      "multipack such as 5 x 10 ml",
+      "strong set marker"
+    ]
+  }
+}

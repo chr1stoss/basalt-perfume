@@ -1,0 +1,830 @@
+{
+  "version": "2.2.0",
+  "normalization": {
+    "unicode": "NFKD",
+    "case": "casefold",
+    "punctuation": "space",
+    "keep_raw_title": true
+  },
+  "type_rules": [
+    {
+      "canonical": "EXTRAIT",
+      "category": "perfume",
+      "priority": 120,
+      "patterns": [
+        "\\bextrait\\s+de\\s+parfum\\b",
+        "\\bextrait\\s+parfum\\b",
+        "\\bextrait\\b",
+        "\\bexdp\\b",
+        "\\bэкстракт\\s+духов\\b"
+      ]
+    },
+    {
+      "canonical": "EDP",
+      "category": "perfume",
+      "priority": 115,
+      "patterns": [
+        "\\bedp\\b",
+        "\\be\\.d\\.p\\.?\\b",
+        "\\beau\\s+de\\s+parfum\\b",
+        "\\bпарфюмированн\\w*\\s+вод\\w*\\b",
+        "\\bпарф\\.?\\s*вод\\w*\\b",
+        "\\bпв\\b",
+        "\\bпарфюмированая\\s+вод\\w*\\b",
+        "\\bпарфюмиванн\\w*\\s+вод\\w*\\b",
+        "\\bпарфюмюрованн\\w*\\s+вод\\w*\\b",
+        "\\bпарфюмированная\\s+вода\\b",
+        "\\bedp(?=\\d)"
+      ]
+    },
+    {
+      "canonical": "EDT",
+      "category": "perfume",
+      "priority": 114,
+      "patterns": [
+        "\\bedt\\b",
+        "\\be\\.d\\.t\\.?\\b",
+        "\\beau\\s+de\\s+toilette\\b",
+        "\\bтуалетн\\w*\\s+вод\\w*\\b",
+        "\\bтуал\\.?\\s*вод\\w*\\b",
+        "\\bтв\\b",
+        "\\bedt(?=\\d)"
+      ]
+    },
+    {
+      "canonical": "EDC",
+      "category": "perfume",
+      "priority": 113,
+      "patterns": [
+        "\\bedc\\b",
+        "\\be\\.d\\.c\\.?\\b",
+        "\\beau\\s+de\\s+cologne\\b",
+        "\\bcol[o]?gne\\b",
+        "\\bcolonia\\b",
+        "\\bодеколон\\b",
+        "\\bодек\\.?\\b",
+        "\\bedc(?=\\d)"
+      ]
+    },
+    {
+      "canonical": "PARFUM",
+      "category": "perfume",
+      "priority": 110,
+      "patterns": [
+        "\\bparfum\\b",
+        "\\bperfume\\b",
+        "\\bparfume\\b",
+        "\\bдухи\\b",
+        "\\bпарфюм\\b"
+      ]
+    },
+    {
+      "canonical": "HAIR_MIST",
+      "category": "hair",
+      "priority": 100,
+      "patterns": [
+        "\\bhair\\s*mist\\b",
+        "\\bhair\\s*perfume\\b",
+        "\\bдухи\\s+для\\s+волос\\b",
+        "\\bпарфюм\\s+для\\s+волос\\b",
+        "\\bдымка\\s+для\\s+волос\\b"
+      ]
+    },
+    {
+      "canonical": "BODY_MIST",
+      "category": "body",
+      "priority": 95,
+      "patterns": [
+        "\\bbody\\s*mist\\b",
+        "\\bпарфюмированн\\w*\\s+спрей\\s+для\\s+тела\\b",
+        "\\bспрей\\s+для\\s+тела\\b",
+        "\\ball[ -]?over\\s+(?:body\\s+)?spray\\b",
+        "\\bbody\\s+spray\\b",
+        "\\bparfum(?:ed)?\\s+body\\s+spray\\b",
+        "\\bbody\\s+fr\\b"
+      ]
+    },
+    {
+      "canonical": "AFTERSHAVE",
+      "category": "cosmetics",
+      "priority": 90,
+      "patterns": [
+        "\\bafter[\\s-]?shave\\b",
+        "\\ba/s\\b",
+        "\\bafter shave balm\\b",
+        "\\bбальзам\\s+после\\s+бритья\\b",
+        "\\bбальзам\\s+п/б\\b",
+        "\\bлосьон\\s+после\\s+бритья\\b",
+        "\\bлосьон\\s+спрей\\s+после\\s+бритья\\b",
+        "\\bлосьон\\s+п/бритья\\b",
+        "\\basb\\b",
+        "\\bспрей\\s+после\\s+бритья\\b",
+        "\\bспрей-?лосьон\\s+после\\s+бритья\\b",
+        "\\bafter\\s+shave\\s+spray\\b"
+      ]
+    },
+    {
+      "canonical": "DEODORANT",
+      "category": "cosmetics",
+      "priority": 88,
+      "patterns": [
+        "\\bdeodorant\\b",
+        "\\bdeo\\b",
+        "\\bдеодорант\\w*\\b",
+        "\\bдезодорант\\w*\\b",
+        "\\bдео\\b",
+        "\\bdeo\\s+stick\\b",
+        "\\bdeu\\s+stick\\b"
+      ]
+    },
+    {
+      "canonical": "BODY_LOTION",
+      "category": "cosmetics",
+      "priority": 85,
+      "patterns": [
+        "\\bbody\\s*lotion\\b",
+        "\\bb/lotion\\b",
+        "\\bb/l\\b",
+        "\\bbody\\s*milk\\b",
+        "\\bfluid\\s+body\\b",
+        "\\bлосьон\\w*\\s+(?:для\\s+тела|д/тела)\\b",
+        "\\bмолочко\\s+для\\s+тела\\b"
+      ]
+    },
+    {
+      "canonical": "SHOWER_GEL",
+      "category": "cosmetics",
+      "priority": 84,
+      "patterns": [
+        "\\bshower\\s*gel\\b",
+        "\\bsh/g\\b",
+        "\\bs/g\\b",
+        "\\bs&g\\b",
+        "\\bsg\\b",
+        "\\bгель\\s+для\\s+душа\\b",
+        "\\bгель\\s+д/душа\\b",
+        "\\bbath\\s*&\\s*shower\\s*gel\\b",
+        "\\bshower\\s+mousse\\b"
+      ]
+    },
+    {
+      "canonical": "SHAMPOO",
+      "category": "hair",
+      "priority": 83,
+      "patterns": [
+        "\\bshampoo\\b",
+        "\\bdry\\s+shampoo\\b",
+        "\\bшампунь\\w*\\b"
+      ]
+    },
+    {
+      "canonical": "CONDITIONER",
+      "category": "hair",
+      "priority": 82,
+      "patterns": [
+        "\\bconditioner\\b",
+        "\\bкондиционер\\w*\\b"
+      ]
+    },
+    {
+      "canonical": "HAIR_MASK",
+      "category": "hair",
+      "priority": 81,
+      "patterns": [
+        "\\bhair\\s+mask\\b",
+        "\\bmask\\b(?=\\s+\\d)",
+        "\\bмаска\\s+для\\s+волос\\b",
+        "\\billuminating\\s+mask\\b"
+      ]
+    },
+    {
+      "canonical": "HAIR_OIL",
+      "category": "hair",
+      "priority": 80,
+      "patterns": [
+        "\\bhair\\s+oil\\b",
+        "\\bмасло\\s+для\\s+волос\\b"
+      ]
+    },
+    {
+      "canonical": "HAND_CREAM",
+      "category": "cosmetics",
+      "priority": 79,
+      "patterns": [
+        "\\bhand\\s+cream\\b",
+        "\\bкрем\\s+для\\s+рук\\b"
+      ]
+    },
+    {
+      "canonical": "MASCARA",
+      "category": "makeup",
+      "priority": 78,
+      "patterns": [
+        "\\bmascara\\b",
+        "\\bтушь\\b"
+      ]
+    },
+    {
+      "canonical": "LIPSTICK",
+      "category": "makeup",
+      "priority": 77,
+      "patterns": [
+        "\\blipstick\\b",
+        "\\bпомада\\b"
+      ]
+    },
+    {
+      "canonical": "LIP_GLOSS",
+      "category": "makeup",
+      "priority": 76,
+      "patterns": [
+        "\\blip\\s*gloss\\b",
+        "\\bблеск\\s+для\\s+губ\\b"
+      ]
+    },
+    {
+      "canonical": "EYELINER",
+      "category": "makeup",
+      "priority": 75,
+      "patterns": [
+        "\\beyeliner\\b",
+        "\\bподводка\\b"
+      ]
+    },
+    {
+      "canonical": "EYESHADOW",
+      "category": "makeup",
+      "priority": 74,
+      "patterns": [
+        "\\beyeshadow\\b",
+        "\\bтени\\b"
+      ]
+    },
+    {
+      "canonical": "FOUNDATION",
+      "category": "makeup",
+      "priority": 73,
+      "patterns": [
+        "\\bfoundation\\b",
+        "\\bтональн\\w*\\s+крем\\b"
+      ]
+    },
+    {
+      "canonical": "FACE_POWDER",
+      "category": "makeup",
+      "priority": 72,
+      "patterns": [
+        "\\bface\\s+powder\\b",
+        "\\bпудра\\b"
+      ]
+    },
+    {
+      "canonical": "BLUSH",
+      "category": "makeup",
+      "priority": 71,
+      "patterns": [
+        "\\bblush\\b",
+        "\\bрумян\\w*\\b"
+      ]
+    },
+    {
+      "canonical": "CREAM",
+      "category": "cosmetics",
+      "priority": 70,
+      "patterns": [
+        "\\bcream\\b",
+        "\\bкрем\\b"
+      ]
+    },
+    {
+      "canonical": "SOAP",
+      "category": "cosmetics",
+      "priority": 69,
+      "patterns": [
+        "\\bsoap\\b",
+        "\\bмыло\\b"
+      ]
+    },
+    {
+      "canonical": "CANDLE",
+      "category": "home",
+      "priority": 68,
+      "patterns": [
+        "\\bcandle\\b",
+        "\\bсвеча\\b"
+      ]
+    },
+    {
+      "canonical": "REFILL",
+      "category": "perfume",
+      "priority": 67,
+      "patterns": [
+        "\\brefill\\b",
+        "\\bсменн\\w*\\s+блок\\b"
+      ]
+    },
+    {
+      "canonical": "SANITIZER",
+      "category": "cosmetics",
+      "priority": 66,
+      "patterns": [
+        "\\bsanitizer\\b",
+        "\\bсанитайзер\\w*\\b",
+        "\\bантисептик\\w*\\b"
+      ]
+    },
+    {
+      "canonical": "ACCESSORY",
+      "category": "other",
+      "priority": 60,
+      "patterns": [
+        "\\bcosmetic\\s*bag\\b",
+        "\\bкосметичка\\b",
+        "\\bбрелок\\b",
+        "\\bbag\\b",
+        "\\bgwp\\b",
+        "\\bfigurine\\b",
+        "\\bфигурк\\w*\\b",
+        "\\bподарок\\b",
+        "\\batomizer\\b",
+        "\\batomiser\\b",
+        "\\bатомайзер\\w*\\b",
+        "\\bатомизатор\\w*\\b",
+        "\\bпакет\\b",
+        "\\bheadband\\b",
+        "\\bbarrette\\b",
+        "\\bpince\\s+à\\s+cheveux\\b",
+        "\\belastique\\b",
+        "\\bkeychain\\b",
+        "\\bpince\\s+[aà]\\s+cheveux\\b",
+        "\\bpurse\\s+bullet\\b",
+        "\\bhead\\s*band\\b"
+      ]
+    },
+    {
+      "canonical": "PERFUME_OIL",
+      "category": "perfume",
+      "priority": 112,
+      "patterns": [
+        "\\bperfume\\s+oil\\b",
+        "\\bparfum\\s+oil\\b",
+        "\\bпарфюмированн\\w*\\s+масл\\w*\\b",
+        "\\bпарфюм\\w*\\s+масл\\w*\\b",
+        "\\bдухи\\s*[-–—]?\\s*масло\\b"
+      ]
+    },
+    {
+      "canonical": "EDS",
+      "category": "perfume",
+      "priority": 109,
+      "patterns": [
+        "\\beau\\s+de\\s+senteur\\b",
+        "\\bscented\\s+water\\b",
+        "\\beds\\b"
+      ]
+    },
+    {
+      "canonical": "BODY_WASH",
+      "category": "body",
+      "priority": 86,
+      "patterns": [
+        "\\bbody\\s+wash\\b",
+        "\\bgel\\s+de\\s+douche\\b",
+        "\\bgel\\s+ducha\\b",
+        "\\bдуш\\w*\\s+гель\\b",
+        "\\bмоющ\\w*\\s+средств\\w*\\s+для\\s+тела\\b"
+      ]
+    },
+    {
+      "canonical": "HAIR_TREATMENT",
+      "category": "hair",
+      "priority": 82,
+      "patterns": [
+        "\\bhair\\s+treatment\\b",
+        "\\bduo\\s+treatment\\b",
+        "\\btreatment\\b",
+        "\\bhair\\s+serum\\b",
+        "\\bscalp\\s+serum\\b",
+        "\\bderma[- ]serum\\b",
+        "\\bсерум\\w*\\b",
+        "\\bсыворотк\\w*\\b",
+        "\\btricho\\w*\\b"
+      ]
+    },
+    {
+      "canonical": "HAIR_STYLING",
+      "category": "hair",
+      "priority": 62,
+      "patterns": [
+        "\\bhair\\s+spray\\b",
+        "\\bstyling\\s+spray\\b",
+        "\\bsession\\s+spray\\b",
+        "\\btexturizing\\s+(?:salt\\s+)?spray\\b",
+        "\\bvolume\\s+spray\\b",
+        "\\bsalt\\s+spray\\b",
+        "\\bstyling\\s+gel\\b",
+        "\\bvolume\\s+mousse\\b",
+        "\\bhair\\s+mousse\\b",
+        "\\bmatt\\s+paste\\b",
+        "\\bshine\\s+wax\\b",
+        "\\bstyling\\s+powder\\b",
+        "\\bтермозащит\\w*\\s+спрей\\b",
+        "\\bлак\\s+для\\s+волос\\b",
+        "\\bleave[- ]in\\s+conditioning\\s+spray\\b",
+        "\\bdetangling\\s+spray\\b",
+        "\\bsun\\s+protection\\s+spray\\b",
+        "\\bthermal\\s+protection\\s+spray\\b",
+        "\\bstyling\\s+lotion\\b",
+        "\\baftercare\\s+spray\\b"
+      ]
+    },
+    {
+      "canonical": "SKINCARE",
+      "category": "cosmetics",
+      "priority": 61,
+      "patterns": [
+        "\\bskin\\s+moisturi[sz]er\\b",
+        "\\bmoisturi[sz]er\\b",
+        "\\bface\\s+toner\\b",
+        "\\bskin\\s+toner\\b",
+        "\\btoner\\b",
+        "\\bserum\\b",
+        "\\bмаск\\w*\\b",
+        "\\bбальзам\\b",
+        "\\bлосьон\\b",
+        "\\bbalm\\b",
+        "\\bmoisturizing\\s+elixir\\b"
+      ]
+    },
+    {
+      "canonical": "SHOWCARD",
+      "category": "other",
+      "priority": 75,
+      "patterns": [
+        "\\bshow\\s*card\\b",
+        "\\bшоу\\s*кард\\b",
+        "\\bшоукард\\b"
+      ]
+    },
+    {
+      "canonical": "BILLBOARD",
+      "category": "other",
+      "priority": 74,
+      "patterns": [
+        "\\bbill\\s*board\\b",
+        "\\bbillboard\\b",
+        "\\bбилборд\\b"
+      ]
+    },
+    {
+      "canonical": "DISPLAY",
+      "category": "other",
+      "priority": 59,
+      "patterns": [
+        "\\bvisual\\b",
+        "\\bdisplay\\b",
+        "\\bposter\\b",
+        "\\bвоблер\\b",
+        "\\bдисплей\\b"
+      ]
+    },
+    {
+      "canonical": "BODY_OIL",
+      "category": "body",
+      "priority": 87,
+      "patterns": [
+        "\\bbody\\s+oil\\b",
+        "\\bмасло\\s+для\\s+тела\\b",
+        "\\bмасло\\s+д/тела\\b"
+      ]
+    },
+    {
+      "canonical": "BODY_EMULSION",
+      "category": "body",
+      "priority": 86,
+      "patterns": [
+        "\\bbody\\s+emulsion\\b",
+        "\\bemulsion\\s+silk\\s+body\\b"
+      ]
+    }
+  ],
+  "gender_rules": {
+    "M": [
+      "\\bpour\\s+homme\\b",
+      "\\bhomme\\b",
+      "\\buomo\\b",
+      "\\bfor\\s+him\\b",
+      "\\bhim\\b",
+      "\\bmen\\b",
+      "\\bman\\b",
+      "\\bmale\\b",
+      "\\bмуж(?:\\.|ской|чина|чины)?\\b",
+      "\\bм\\b(?=\\s|$)",
+      "\\(m\\)"
+    ],
+    "F": [
+      "\\bpour\\s+femme\\b",
+      "\\bfemme\\b",
+      "\\bdonna\\b",
+      "\\bfor\\s+her\\b",
+      "\\bher\\b",
+      "\\bwomen\\b",
+      "\\bwoman\\b",
+      "\\bgirl\\b",
+      "\\bfemale\\b",
+      "\\bжен(?:\\.|ский|щина|щины)?\\b",
+      "\\bж\\b(?=\\s|$)",
+      "\\(w\\)",
+      "\\(f\\)"
+    ],
+    "U": [
+      "\\bunisex\\b",
+      "\\buni\\b",
+      "\\bunisex\\b",
+      "\\bуни(?:\\.|секс)?\\b",
+      "\\(u\\)",
+      "\\bu\\b(?=\\s|$)"
+    ]
+  },
+  "gender_from_name_terms": [
+    "homme",
+    "man",
+    "men",
+    "male",
+    "femme",
+    "woman",
+    "women",
+    "girl",
+    "female",
+    "unisex",
+    "uni",
+    "M",
+    "F",
+    "W",
+    "U",
+    "муж",
+    "жен",
+    "муж.",
+    "жен.",
+    "уни",
+    "унисекс",
+    "wom"
+  ],
+  "tester_terms": [
+    "\\btester\\b",
+    "\\bтестер\\b",
+    "\\btst\\b",
+    "\\bтест\\b"
+  ],
+  "sample_terms": [
+    "\\bdecant\\w*\\b",
+    "\\bотливант\\w*\\b",
+    "\\bраспив\\w*\\b",
+    "\\bпробник\\w*\\b",
+    "\\bsample\\b",
+    "\\bvial\\b",
+    "\\bdoses?\\b"
+  ],
+  "set_terms": [
+    "\\bset\\b",
+    "\\bнабор\\w*\\b",
+    "\\bcoffret\\b",
+    "\\bgift\\s*set\\b",
+    "\\bкомплект\\w*\\b",
+    "\\bkit\\b"
+  ],
+  "multipack_pattern": "(?P<qty>\\d+)\\s*[xхX×*]\\s*(?P<volume>\\d+(?:[.,]\\d+)?)\\s*(?P<unit>ml|мл)\\b",
+  "volume_pattern": "(?<![\\w])(?P<volume>\\d+(?:[.,]\\d+)?)\\s*(?P<unit>ml|мл|g|gr|г|гр|oz|fl\\.?\\s*oz)\\b",
+  "defect_rules": [
+    {
+      "code": "NO_SPRAY",
+      "label": "без спрея",
+      "patterns": [
+        "\\bбез\\s+спрея\\b",
+        "\\bб\\s*/?\\s*спрея\\b",
+        "\\bбспрея\\b",
+        "\\bsplash\\b",
+        "\\bсплэш\\b",
+        "\\bno\\s+spray\\b",
+        "\\bbroken\\s+spray\\b"
+      ]
+    },
+    {
+      "code": "NO_CAP",
+      "label": "без крышки",
+      "patterns": [
+        "\\bбез\\s+крышки\\b",
+        "\\bno\\s+cap\\b",
+        "\\bголый\\b",
+        "\\bбез\\s+колпачка\\b"
+      ]
+    },
+    {
+      "code": "NO_BOX",
+      "label": "без коробки",
+      "patterns": [
+        "\\bбез\\s+коробки\\b",
+        "\\bбез\\s+упаковки\\b",
+        "\\bno\\s+box\\b",
+        "\\bboxless\\b"
+      ]
+    },
+    {
+      "code": "BOX_DAMAGED",
+      "label": "повреждена коробка/упаковка",
+      "patterns": [
+        "\\bпомят\\w*\\s*(?:коробк\\w*|упаковк\\w*)?\\b",
+        "\\bподмят\\w*\\b",
+        "\\bмятая\\s+упаковка\\b",
+        "\\bповрежд\\w*\\s+упаковк\\w*\\b",
+        "\\bbox\\s+damage\\w*\\b"
+      ]
+    },
+    {
+      "code": "BOTTLE_DAMAGED",
+      "label": "повреждён флакон",
+      "patterns": [
+        "\\bскол\\w*\\b",
+        "\\bдефект\\w*\\b",
+        "\\bсломан\\w*\\b",
+        "\\bповрежд\\w*\\s+флакон\\w*\\b",
+        "\\bbroken\\s+bottle\\b"
+      ]
+    },
+    {
+      "code": "SCRATCHED",
+      "label": "потёртости/царапины",
+      "patterns": [
+        "\\bтерт\\w*\\b",
+        "\\bстёрт\\w*\\b",
+        "\\bпотерт\\w*\\b",
+        "\\bцарапин\\w*\\b",
+        "\\bscratched\\b"
+      ]
+    },
+    {
+      "code": "LEAKAGE",
+      "label": "подтёк/недолив",
+      "patterns": [
+        "\\bнедолив\\w*\\b",
+        "\\bтеч[её]т\\b",
+        "\\bleak\\w*\\b",
+        "\\bостаток\\s+\\d+\\s*%"
+      ]
+    }
+  ],
+  "extra_info_rules": [
+    {
+      "code": "LUXURY_BOX",
+      "label": "luxury box",
+      "patterns": [
+        "\\bluxury\\s+box\\b"
+      ]
+    },
+    {
+      "code": "LIMITED_EDITION",
+      "label": "limited edition",
+      "patterns": [
+        "\\blimited\\s+edition\\b",
+        "\\bлимитированн\\w*\\b"
+      ]
+    },
+    {
+      "code": "REFILL",
+      "label": "refill",
+      "patterns": [
+        "\\brefill\\b"
+      ]
+    },
+    {
+      "code": "RUSSIAN_LABEL",
+      "label": "с русификацией",
+      "patterns": [
+        "\\bс\\s+русификацией\\b",
+        "\\bрусификац\\w*\\b",
+        "\\bрус\\.\\b"
+      ]
+    },
+    {
+      "code": "VINTAGE",
+      "label": "vintage",
+      "patterns": [
+        "\\bvintage\\b",
+        "\\bвинтаж\\w*\\b"
+      ]
+    },
+    {
+      "code": "METAL_BOTTLE",
+      "label": "металлический флакон",
+      "patterns": [
+        "\\bметалл\\w*\\b",
+        "\\bжелезн\\w*\\s+флакон\\w*\\b"
+      ]
+    },
+    {
+      "code": "NEW_DESIGN",
+      "label": "новый дизайн",
+      "patterns": [
+        "\\bнов\\w*\\s+дизайн\\w*\\b"
+      ]
+    },
+    {
+      "code": "OLD_DESIGN",
+      "label": "старый дизайн",
+      "patterns": [
+        "\\bстар\\w*\\s+дизайн\\w*\\b"
+      ]
+    },
+    {
+      "code": "GWP",
+      "label": "gift with purchase",
+      "patterns": [
+        "\\bgwp\\b",
+        "\\bgift\\s+with\\s+purchase\\b"
+      ]
+    },
+    {
+      "code": "HOLIDAY",
+      "label": "holiday edition",
+      "patterns": [
+        "\\bholiday\\b",
+        "\\bchristmas\\b",
+        "\\bпраздничн\\w*\\b"
+      ]
+    },
+    {
+      "code": "COLLECTOR",
+      "label": "collector edition",
+      "patterns": [
+        "\\bcollector\\W*s\\s+edition\\b",
+        "\\bколлекционн\\w*\\b"
+      ]
+    }
+  ],
+  "component_aliases": {
+    "B/L": "BODY_LOTION",
+    "B/LOTION": "BODY_LOTION",
+    "BODY LOTION": "BODY_LOTION",
+    "FLUID BODY": "BODY_LOTION",
+    "S/G": "SHOWER_GEL",
+    "SH/G": "SHOWER_GEL",
+    "SG": "SHOWER_GEL",
+    "SSG": "SHOWER_GEL",
+    "SHOWER GEL": "SHOWER_GEL",
+    "SHOWER MOUSSE": "SHOWER_GEL",
+    "ASB": "AFTERSHAVE",
+    "AFTERSHAVE BALM": "AFTERSHAVE",
+    "DEO": "DEODORANT",
+    "DEODORANT": "DEODORANT",
+    "DEU STICK": "DEODORANT",
+    "EDP": "EDP",
+    "EDT": "EDT",
+    "EDC": "EDC",
+    "GWP": "ACCESSORY",
+    "COSMETIC BAG": "ACCESSORY",
+    "FIGURINE": "ACCESSORY",
+    "CANDLE": "CANDLE",
+    "BODY WASH": "BODY_WASH"
+  },
+  "row_markers": {
+    "header": [
+      "артикул",
+      "наименование",
+      "номенклатура",
+      "товар",
+      "цена",
+      "price",
+      "sku"
+    ],
+    "meta": [
+      "телефон",
+      "phone",
+      "e-mail",
+      "email",
+      "www.",
+      "http://",
+      "https://"
+    ],
+    "total": [
+      "итого",
+      "всего",
+      "total",
+      "сумма",
+      "order total"
+    ]
+  },
+  "suspicious_price": {
+    "default_currency": "USD",
+    "min_exclusive": 0,
+    "max_usd": 10000,
+    "large_value_pattern": "^\\d{7,}(?:\\.0+)?$"
+  },
+  "parse_policy": {
+    "preserve_every_physical_row": true,
+    "keep_raw_title": true,
+    "never_infer_missing_set_components": true,
+    "ambiguous_fields_go_to_review": true,
+    "do_not_guess_suspicious_prices": true
+  },
+  "notes": "Rules are conservative, evidence-based heuristics. Preserve raw titles and send ambiguity to review."
+}
