@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Set up PHP for compatibility lint
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          extensions: pdo_mysql
+          coverage: none
+
+      - name: Check syntax
+        run: |
+          python -m compileall -q main.py bot tests
+          node --check htdocs/assets/app.js
+          php -l htdocs/index.php
+          php -l htdocs/api.php
+          php -l cron/subscription_reminders.php
+
+      - name: Run tests
+        run: python -m pytest

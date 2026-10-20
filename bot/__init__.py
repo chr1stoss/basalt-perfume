@@ -1,0 +1,1 @@
+"""Basalt Perfume Telegram bot."""
