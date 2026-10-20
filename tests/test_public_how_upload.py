@@ -15,6 +15,6 @@ def test_how_upload_callback_is_public_and_only_opens_instructions():
     assert "get_user_role" not in callback
     assert "buyer_upload_disabled" not in callback
     assert "none_subscription_required" not in callback
-    assert "await show_call_view(call, UPLOAD_IMAGE" in callback
+    assert 'await show_call_view(call, image_for(language, "upload")' in callback
     assert 'tr(language, "how_upload_title")' in callback
     assert 'tr(language, "how_upload_body")' in callback

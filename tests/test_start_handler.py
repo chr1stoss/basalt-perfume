@@ -21,7 +21,7 @@ def test_normal_start_renders_final_menu_once_and_replaces_stale_menu_without_ed
 
 def test_start_preserves_language_deep_links_and_has_database_failure_fallback():
     start = _start_source()
-    assert "switch_lang_(ru|en|kz|kk)" in start
+    assert "switch_lang_(ru|en|kz)" in start
     assert "await set_user_language(message.from_user.id" in start
     assert 'Could not build personalized /start menu tg_id=%s' in start
     assert 'Failed to process /start for tg_id=%s' in start

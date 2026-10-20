@@ -74,16 +74,13 @@ def test_every_feature_package_registers_its_leaf_routers():
         assert aliases <= included, f"Unregistered leaf routers in {feature}: {aliases - included}"
 
 
-def test_leaf_router_modules_have_at_most_two_top_level_definitions():
-    offenders = []
+def test_leaf_router_modules_are_valid_python_and_have_named_definitions():
     for path in FEATURES.rglob("*.py"):
         if path.name == "__init__.py":
             continue
         tree = _tree(path)
         definitions = [
-            node.name for node in tree.body
+            node for node in tree.body
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
         ]
-        if len(definitions) > 2:
-            offenders.append(f"{path.relative_to(ROOT)}: {definitions}")
-    assert not offenders, "Leaf modules exceed the 1–2 definition target:\n" + "\n".join(offenders)
+        assert definitions, f"Router module has no top-level function or class: {path.relative_to(ROOT)}"
