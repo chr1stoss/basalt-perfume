@@ -52,12 +52,12 @@ def test_api_background_status_polls_do_not_refresh_session_or_lock_guards():
 def test_mobile_asset_cache_versions_and_fallback_images_are_present():
     # Ищем путь к app.js с ЛЮБОЙ цифрой версии (v=108, v=109 и т.д.)
     pattern = re.compile(r"/assets/app\.js\?v=\d+")
-    
+
     for page in (PUBLIC / "mobile").glob("*.html"):
         text = page.read_text(encoding="utf-8")
         if "app.js" in text:
             assert pattern.search(text), f"В файле {page.name} нет правильной ссылки на app.js с версией"
-            
+
     assert (PUBLIC / "assets" / "img" / "avatar-placeholder.webp").is_file()
     assert (PUBLIC / "assets" / "img" / "logo.webp").is_file()
     assert (PUBLIC / "assets" / "img" / "logo.svg").is_file()
