@@ -1,0 +1,76 @@
+Options -Indexes
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  Options -MultiViews
+
+  # Stable root favicon URL (kept in sync with assets/img/icon.ico).
+  RewriteRule ^favicon\.ico$ assets/img/icon.ico [L,NC]
+
+  # Telegram OIDC callback: public URL remains exactly as registered in BotFather.
+  RewriteRule ^telegram-login-callback\.html$ mobile/telegram-login-callback.html [L,NC]
+
+  # Mobile ordinary-browser routes use the mobile shell but remain distinct from Telegram WebApp.
+  RewriteRule ^m/home/?$ mobile/index.html [L,QSA,NC]
+  RewriteRule ^m/prices/?$ mobile/prices.html [L,QSA,NC]
+  RewriteRule ^m/subscription/?$ mobile/subscription.html [L,QSA,NC]
+  RewriteRule ^m/settings/?$ mobile/settings.html [L,QSA,NC]
+  RewriteRule ^m/admin/?$ mobile/admin.html [L,QSA,NC]
+  RewriteRule ^m/search/?$ mobile/search.html [L,QSA,NC]
+  RewriteRule ^m/notifications/?$ mobile/notifications.html [L,QSA,NC]
+  RewriteRule ^m/support/?$ mobile/support.html [L,QSA,NC]
+
+  # Browser PHP shells.
+  RewriteRule ^home/?$ desktop/index.php [L,QSA,NC]
+  RewriteRule ^prices/?$ desktop/prices.php [L,QSA,NC]
+  RewriteRule ^subscription/?$ desktop/subscription.php [L,QSA,NC]
+  RewriteRule ^settings/?$ desktop/settings.php [L,QSA,NC]
+  RewriteRule ^admin/?$ desktop/admin.php [L,QSA,NC]
+  RewriteRule ^search/?$ desktop/search.php [L,QSA,NC]
+  RewriteRule ^notifications/?$ desktop/notifications.php [L,QSA,NC]
+  RewriteRule ^support/?$ desktop/support.php [L,QSA,NC]
+
+  # Telegram WebApp legacy URLs.
+  RewriteRule ^index\.html$ mobile/index.html [L,NC]
+  RewriteRule ^prices\.html$ mobile/prices.html [L,NC]
+  RewriteRule ^subscription\.html$ mobile/subscription.html [L,NC]
+  RewriteRule ^settings\.html$ mobile/settings.html [L,NC]
+  RewriteRule ^admin\.html$ mobile/admin.html [L,NC]
+  RewriteRule ^search\.html$ mobile/search.html [L,NC]
+  RewriteRule ^notifications\.html$ mobile/notifications.html [L,NC]
+  RewriteRule ^support\.html$ mobile/support.html [L,NC]
+  RewriteRule ^notification/?$ /notifications [R=301,L,NC]
+  RewriteRule ^notification\.html$ /notifications [R=301,L,NC]
+  RewriteRule ^index\.php$ /home [R=302,L,NC]
+  RewriteRule ^(prices|subscription|settings|admin|search|notifications|support)\.php$ /$1 [R=302,L,NC]
+  RewriteRule ^auth/?$ https://oauth.telegram.org/auth [R=302,L,NE]
+
+  # Never expose private files or application directories directly.
+  RewriteRule ^(?:\.env|.*\.(?:sql|log|ini|bak|py|md|zip))$ - [F,L,NC]
+  RewriteRule ^(?:api|config|migrations|actions|scripts|\.changelog|telegram-oidc-relay)(?:/|$) - [F,L,NC]
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:css|js|woff2|svg|webp|png|jpe?g)$">
+    Header set X-Content-Type-Options "nosniff"
+  </FilesMatch>
+  Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+</IfModule>
+
+DirectoryIndex mobile/index.html
+
+# Apache 2.4 authorization syntax; keep legacy compatibility when that module exists.
+<FilesMatch "(^\.env|\.sql$|\.log$|\.ini$|\.bak$|\.py$|\.md$|\.zip$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+
+</FilesMatch>
+
+ErrorDocument 401 /errors/401.html
+ErrorDocument 403 /errors/403.html
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /errors/500.html
+
+<IfModule mod_mime.c>
+  AddType image/x-icon .ico
+</IfModule>

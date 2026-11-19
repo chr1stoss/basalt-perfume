@@ -1,0 +1,341 @@
+/* Mobile / Telegram WebApp-only layer. Core component styling remains in shared assets/app.css. */
+html.ui-boot-pending body .topbar,
+html.ui-boot-pending body .bottom-nav,
+html.ui-boot-pending body .desktop-sidebar,
+html.ui-boot-pending body .desktop-compact-nav,
+html.ui-boot-pending body .desktop-page-meta { visibility: hidden !important; }
+@media (max-width: 899px) {
+  .desktop-sidebar, .desktop-page-meta, .desktop-compact-nav { display: none !important; }
+}
+
+
+/* Mobile-shell rules shared by Telegram WebApp and the isolated mobile-browser mode. */
+body:is(.telegram-shell,.mobile-browser-shell) .mobile-content-loading-overlay {
+  top:76px !important;
+  right:0 !important;
+  bottom:calc(84px + env(safe-area-inset-bottom)) !important;
+  left:0 !important;
+  z-index:10001 !important;
+  display:grid !important;
+  place-items:center !important;
+  pointer-events:none !important;
+  background:color-mix(in srgb,var(--bg) 13%,transparent) !important;
+  -webkit-backdrop-filter:blur(14px) !important;
+  backdrop-filter:blur(14px) !important;
+}
+body:is(.telegram-shell,.mobile-browser-shell) .notifications-content-toolbar {display:none !important;min-height:0 !important;height:0 !important;margin:0 !important;padding:0 !important;}
+body:is(.telegram-shell,.mobile-browser-shell) .topbar #markAllReadButton {flex:0 0 auto;margin-left:auto !important;width:40px;min-width:40px;height:40px;padding:0;}
+body:is(.telegram-shell,.mobile-browser-shell) .topbar #notificationsButton {flex:0 0 auto;margin-left:7px;}
+body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll .admin-user-row[data-admin-user] {
+  padding-left:12px !important;
+  padding-right:12px !important;
+}
+/* One scroll owner per list: the outer card never scrolls, only its inner list does. */
+body:is(.telegram-shell,.mobile-browser-shell) .admin-key-list {
+  max-height:none !important;
+  overflow:visible !important;
+}
+body:is(.telegram-shell,.mobile-browser-shell) .admin-key-scroll,
+body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll {
+  max-height:224px !important;
+  min-height:0 !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain;
+  scrollbar-width:thin !important;
+  scrollbar-color:color-mix(in srgb,var(--muted) 55%,transparent) transparent !important;
+  -webkit-overflow-scrolling:touch;
+}
+body:is(.telegram-shell,.mobile-browser-shell) .admin-key-scroll::-webkit-scrollbar,
+body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll::-webkit-scrollbar {width:7px !important;height:7px !important;}
+body:is(.telegram-shell,.mobile-browser-shell) .admin-key-scroll::-webkit-scrollbar-track,
+body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll::-webkit-scrollbar-track {background:transparent !important;}
+body:is(.telegram-shell,.mobile-browser-shell) .admin-key-scroll::-webkit-scrollbar-thumb,
+body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll::-webkit-scrollbar-thumb {
+  background:color-mix(in srgb,var(--muted) 48%,transparent) !important;
+  border:2px solid transparent;border-radius:99px;background-clip:padding-box;
+}
+body:is(.telegram-shell,.mobile-browser-shell) .admin-key-scroll::-webkit-scrollbar-button,
+body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll::-webkit-scrollbar-button {display:none !important;width:0 !important;height:0 !important;}
+
+
+/* v13.10.15 mobile visual refinements */
+@media (max-width:899px) {
+  body:is(.telegram-shell,.mobile-browser-shell) .topbar #markAllReadButton,
+  body:is(.telegram-shell,.mobile-browser-shell) .topbar #notificationsButton {
+    box-sizing:border-box !important; width:40px !important; min-width:40px !important;
+    max-width:40px !important; height:40px !important; min-height:40px !important;
+    flex:0 0 40px !important; padding:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .topbar #notificationsButton { margin-left:auto !important; margin-right:0 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell)[data-initial-screen="notifications"] .topbar #markAllReadButton:not([hidden]) { margin-left:auto !important; }
+  body:is(.telegram-shell,.mobile-browser-shell)[data-initial-screen="notifications"] .topbar #notificationsButton { margin-left:0 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-key-list,
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-key-list .admin-key-scroll {
+    scrollbar-width:none !important; -ms-overflow-style:none !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-key-list::-webkit-scrollbar,
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-key-list .admin-key-scroll::-webkit-scrollbar {
+    display:none !important; width:0 !important; height:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .loading-card { transform:none !important; margin-top:14px !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .web-upload-card .file-icon.excel-file-icon { display:none !important; }
+  /* Settings uses the same horizontally inset content loader as every other mobile page. */
+}
+
+/* v13.10.16: stable settings loader geometry during the blur transition. */
+@media (max-width:899px) {
+  body:is(.telegram-shell,.mobile-browser-shell) .loading-card { transform:none !important; margin-top:14px !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) #screenLoadingOverlay {
+    box-sizing:border-box !important;
+    padding-left:16px !important;
+    padding-right:calc(16px + var(--bp-scrollbar-width, 0px)) !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) #screenLoadingOverlay .desktop-catalog-loading {
+    box-sizing:border-box !important; width:100% !important; max-width:none !important;
+    margin-left:0 !important; margin-right:0 !important;
+    padding-left:20px !important; padding-right:20px !important;
+  }
+}
+
+
+/* Keep the mobile shell from flashing on desktop-browser legacy URLs during canonical redirect. */
+html[data-bp-ui-mode="desktop-browser"] body.telegram-shell { visibility: hidden !important; }
+
+
+/* v13.10.21 — mobile visual consistency */
+@media (max-width:899px) {
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-choice .swatch {
+    position:relative !important;display:inline-block !important;flex:0 0 30px !important;
+    width:30px !important;height:20px !important;margin:0 2px 0 0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-choice .swatch i {
+    position:absolute !important;top:2px !important;width:16px !important;height:16px !important;
+    margin:0 !important;border-width:1px !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-choice .swatch i:first-child { left:0 !important;z-index:2 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-choice .swatch i:last-child { left:10px !important;z-index:1 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) #app .appearance-section-head { margin-top:22px !important;margin-bottom:12px !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) #screenLoadingOverlay {
+    box-sizing:border-box !important;padding-left:16px !important;
+    padding-right:calc(16px + var(--bp-scrollbar-width,0px)) !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) #screenLoadingOverlay .desktop-catalog-loading {
+    width:100% !important;max-width:none !important;margin-left:0 !important;margin-right:0 !important;
+    padding-left:20px !important;padding-right:20px !important;box-sizing:border-box !important;
+  }
+  body.mobile-browser-shell .mobile-browser-session-gap { height:18px !important;min-height:18px !important; }
+}
+
+
+/* v13.10.26 — mobile activation and modal/theme alignment */
+@media (max-width:899px) {
+  body:is(.telegram-shell,.mobile-browser-shell) .site-key-activation-modal .modal-actions { display:flex !important; gap:10px !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .site-key-activation-modal .modal-actions > .button { flex:1 1 0 !important; width:auto !important; min-width:0 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .modal-filter,
+  body:is(.telegram-shell,.mobile-browser-shell) .filter-modal {
+    min-height:85dvh !important;
+    max-height:85dvh !important;
+  }
+  /* The sheet itself keeps its original geometry; only the scrollable inner content gets the right inset. */
+  body:is(.telegram-shell,.mobile-browser-shell) .modal-filter .modal-content,
+  body:is(.telegram-shell,.mobile-browser-shell) .filter-modal .modal-content {
+    padding-right:clamp(16px,1.5vw,16px) !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-grid .theme-choice { display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; text-align:center !important; gap:6px !important; min-width:0 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-grid .theme-choice .swatch { display:flex !important; position:relative !important; width:36px !important; height:25px !important; flex:0 0 25px !important; justify-content:center !important; align-items:center !important; margin:0 auto !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-grid .theme-choice .swatch i { position:absolute !important; top:2px !important; width:20px !important; height:20px !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-grid .theme-choice .swatch i:first-child { left:1px !important; z-index:2 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .theme-grid .theme-choice .swatch i:last-child { left:14px !important; z-index:1 !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .buyer-action-grid .buyer-search-wide { display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; text-align:center !important; gap:10px !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .buyer-action-grid .buyer-search-wide > .symbol { width:46px !important; height:46px !important; flex:0 0 46px !important; display:grid !important; place-items:center !important; margin:0 auto !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .buyer-action-grid .buyer-search-wide > span:last-child { width:100% !important; text-align:center !important; }
+  body:is(.telegram-shell,.mobile-browser-shell) .buyer-action-grid .buyer-search-wide strong,
+  body:is(.telegram-shell,.mobile-browser-shell) .buyer-action-grid .buyer-search-wide small { text-align:center !important; }
+}
+
+
+/* v13.10.28 — mobile admin user modal, list scrollbars and loader insets. */
+@media (max-width:899px) {
+  /* Keep every filter-style sheet at the requested 85dvh even after the shared shell rules. */
+  body:is(.telegram-shell,.mobile-browser-shell):not(.external-open) .modal-backdrop > .filter-modal,
+  body:is(.telegram-shell,.mobile-browser-shell):not(.external-open) .modal-backdrop > .modal-filter {
+    min-height:85dvh !important; max-height:85dvh !important; height:85dvh !important;
+  }
+
+  /* Hide the users list scrollbar without disabling touch scrolling. */
+  body:is(.telegram-shell,.mobile-browser-shell) .card.admin-users,
+  body:is(.telegram-shell,.mobile-browser-shell) .card.admin-users .admin-users-scroll,
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll {
+    scrollbar-width:none !important; -ms-overflow-style:none !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .card.admin-users::-webkit-scrollbar,
+  body:is(.telegram-shell,.mobile-browser-shell) .card.admin-users .admin-users-scroll::-webkit-scrollbar,
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-users-scroll::-webkit-scrollbar {
+    display:none !important; width:0 !important; height:0 !important;
+  }
+
+  /* The admin user sheet has one scroll owner and stable inner spacing. */
+  body:is(.telegram-shell,.mobile-browser-shell):not(.external-open) .modal-backdrop > .admin-user-modal {
+    min-height:85dvh !important; max-height:85dvh !important; height:85dvh !important;
+    display:flex !important; flex-direction:column !important; overflow:hidden !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell):not(.external-open) .admin-user-modal > .modal-content {
+    flex:1 1 auto !important; min-height:0 !important; height:auto !important;
+    overflow-x:hidden !important; overflow-y:auto !important;
+    padding:0 16px calc(22px + env(safe-area-inset-bottom)) !important;
+    box-sizing:border-box !important; scrollbar-width:none !important; -ms-overflow-style:none !important;
+    -webkit-overflow-scrolling:touch;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell):not(.external-open) .admin-user-modal > .modal-content::-webkit-scrollbar { display:none !important; width:0 !important; }
+
+  /* Subscription key rows: label, duration, complete key and dates must remain separate. */
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys {
+    display:block !important; width:100% !important; min-width:0 !important;
+    margin:22px 0 20px !important; padding:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .section-head {
+    display:flex !important; align-items:center !important; justify-content:flex-start !important;
+    margin:0 0 13px !important; padding:0 !important; min-height:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .section-head h3 {
+    margin:0 !important; font-size:16px !important; line-height:1.3 !important; font-weight:750 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys .admin-subscription-key-row {
+    display:flex !important; flex-direction:column !important; align-items:stretch !important;
+    gap:6px !important; width:100% !important; min-width:0 !important;
+    margin:0 0 9px !important; padding:11px 12px !important;
+    border:1px solid var(--line) !important; border-radius:13px !important;
+    background:color-mix(in srgb,var(--panel2) 78%,transparent) !important; box-sizing:border-box !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys .admin-subscription-key-head {
+    display:flex !important; align-items:baseline !important; justify-content:space-between !important;
+    gap:8px !important; width:100% !important; min-width:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys .admin-subscription-key-head strong {
+    min-width:0 !important; font-size:12px !important; line-height:1.35 !important; overflow-wrap:anywhere !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys .admin-subscription-key-head .tiny {
+    flex:0 0 auto !important; white-space:nowrap !important; font-size:10px !important; line-height:1.3 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys .admin-full-subscription-key {
+    display:block !important; width:100% !important; min-width:0 !important; margin:0 !important;
+    padding:0 !important; background:transparent !important; border:0 !important;
+    color:var(--text) !important; font-family:ui-monospace,SFMono-Regular,Consolas,monospace !important;
+    font-size:11px !important; line-height:1.45 !important; font-weight:650 !important;
+    overflow-wrap:anywhere !important; word-break:break-word !important; white-space:normal !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys .admin-subscription-key-dates {
+    display:block !important; margin:0 !important; font-size:9px !important;
+    line-height:1.45 !important; white-space:normal !important; overflow-wrap:anywhere !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .tiny.muted { display:block; padding:3px 0; line-height:1.45 !important; }
+
+  /* Loaders inside bottom-sheet modals must clear the grab handle before appearing. */
+  body:is(.telegram-shell,.mobile-browser-shell) .modal-backdrop .filter-modal > .modal-content > .loading-card,
+  body:is(.telegram-shell,.mobile-browser-shell) .modal-backdrop .modal-filter > .modal-content > .loading-card {
+    margin-top:18px !important;
+  }
+}
+
+
+/* v13.10.30 — seller options match the other custom-select rows (inline count + trailing check). */
+@media (max-width:899px) {
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-option {
+    display:flex !important; align-items:center !important; justify-content:space-between !important;
+    gap:8px !important; width:100% !important; min-height:42px !important;
+    padding:9px 10px !important; border:1px solid transparent !important;
+    border-radius:10px !important; box-sizing:border-box !important; white-space:normal !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-option.selected {
+    border-color:var(--accent-border,var(--line)) !important;
+    background:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+    outline:1px solid var(--accent-border,var(--line)) !important; outline-offset:-1px !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-copy {
+    display:inline-flex !important; align-items:baseline !important; gap:5px !important;
+    flex:1 1 auto !important; min-width:0 !important; overflow:hidden !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-name {
+    display:inline-block !important; flex:0 1 auto !important; min-width:0 !important;
+    overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important;
+    line-height:1.35 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-product-count {
+    display:inline-block !important; flex:0 0 auto !important; max-width:none !important;
+    margin:0 !important; color:var(--muted) !important; font:inherit !important;
+    font-size:12px !important; white-space:nowrap !important; text-align:left !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-option > .svg-icon {
+    display:block !important; width:14px !important; height:14px !important;
+    flex:0 0 14px !important; margin-left:auto !important; color:var(--accent) !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-private .seller-filter-lock {
+    display:grid !important; place-items:center !important; width:17px !important; flex:0 0 17px !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-private .seller-filter-copy {
+    flex:1 1 auto !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-private .seller-product-count-hidden {
+    font-size:10px !important; color:var(--muted) !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .filter-modal .modal-grab {
+    margin-bottom:20px !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .filter-modal .modal-head {
+    margin-bottom:6px !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .favorites-modal .modal-head {
+    margin-bottom:6px !important;
+  }
+  /* The first section title stays prominent; queue/frozen titles use 14px shared section-head typography. */
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .section-head:first-child h3 {
+    font-size:16px !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .section-head:not(:first-child) {
+    margin:16px 0 8px !important; padding:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .section-head:not(:first-child) h3 {
+    margin:0 !important; font-size:14px !important; line-height:1.35 !important; font-weight:700 !important;
+  }
+}
+
+/* v13.10.31 — admin user details and seller multi-select refinements. */
+@media (max-width:899px) {
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys {
+    border-top:0 !important;
+    padding-top:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .section-head:not(:first-child) {
+    justify-content:space-between !important;
+    width:100% !important;
+    gap:10px !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .admin-user-subscription-keys > .section-head:not(:first-child) .section-count {
+    margin-left:auto !important;
+    flex:0 0 auto !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-option {
+    flex-wrap:nowrap !important;
+    min-width:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-copy {
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    gap:5px !important;
+    overflow:hidden !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-filter-name {
+    flex:1 1 auto !important;
+    min-width:0 !important;
+  }
+  body:is(.telegram-shell,.mobile-browser-shell) .seller-filter-menu .seller-product-count {
+    flex:0 0 auto !important;
+    min-width:max-content !important;
+    max-width:none !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    white-space:nowrap !important;
+  }
+}

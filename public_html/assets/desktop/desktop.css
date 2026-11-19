@@ -1,0 +1,1157 @@
+/* Basalt Perfume v13 — desktop browser presentation. Shared component styles live in /assets/app.css. */
+html.ui-boot-pending body .topbar,
+html.ui-boot-pending body .desktop-sidebar,
+html.ui-boot-pending body .desktop-compact-nav,
+html.ui-boot-pending body .desktop-page-meta,
+html.ui-boot-pending body .bottom-nav { visibility: hidden !important; }
+body.external-open .desktop-sidebar, body.external-open .desktop-compact-nav, body.external-open .desktop-page-meta, body:not(.browser-mode) .topbar, body:not(.browser-mode) .desktop-sidebar, body:not(.browser-mode) .desktop-compact-nav, body:not(.browser-mode) .desktop-page-meta { display:none !important; }
+body.browser-mode { overflow-x: hidden; --bp-desktop-sidebar-width:244px; }
+body.browser-mode .app-shell {
+  width:min(100%,1760px);max-width:1760px;min-height:100vh;margin:0 auto;
+  padding:22px clamp(20px,2.6vw,44px) 54px;
+  display:grid;grid-template-columns:var(--bp-desktop-sidebar-width,244px) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);
+  column-gap:clamp(24px,2.5vw,42px);row-gap:0;align-items:start;
+}
+body.browser-mode .desktop-sidebar {
+  position:fixed;top:22px;left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px));
+  width:var(--bp-desktop-sidebar-width,244px);height:calc(100dvh - 44px);min-height:0;max-height:calc(100dvh - 44px);
+  overflow-y:auto;overscroll-behavior:contain;z-index:60;padding:22px 16px 18px;border:1px solid var(--line);
+  border-radius: 24px; background: color-mix(in srgb, var(--panel) 91%, transparent);
+  box-shadow: 0 18px 56px rgba(0,0,0,.18); display: flex; flex-direction: column; gap: 30px;
+}
+body.browser-mode .desktop-sidebar-brand { width:100%;border:0;background:transparent;color:inherit;cursor:pointer;text-align:left;font:inherit;appearance:none;display:flex; align-items:center; gap:12px; padding: 0 8px 24px; border-bottom:1px solid var(--line); }
+body.browser-mode .desktop-sidebar-brand img { width:42px; height:42px; object-fit:contain; }
+body.browser-mode .desktop-sidebar-brand strong { display:block; letter-spacing:.18em; font-size:14px; }
+body.browser-mode .desktop-sidebar-brand small { display:block; margin-top:3px; color:var(--muted); font-size:9px; letter-spacing:.16em; }
+body.browser-mode .desktop-side-nav { display:grid;gap:8px;align-content:start; }
+body.browser-mode .desktop-side-nav button { min-height:48px; width:100%; display:flex; align-items:center; gap:13px; padding:0 13px; border:1px solid transparent; border-radius:13px; color:var(--muted); background:transparent; text-align:left; cursor:pointer; font:inherit; font-size:13px; font-weight:650; transition:background .18s ease,color .18s ease,border-color .18s ease; }
+body.browser-mode .desktop-side-nav button svg { width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; flex:0 0 19px; }
+body.browser-mode .desktop-side-nav button:hover { color:var(--text); background:var(--panel-2); }
+body.browser-mode .desktop-side-nav button.active { color:var(--text);border-color:var(--text);background:color-mix(in srgb,var(--panel-2) 80%,transparent);box-shadow:none; }
+body.browser-mode .desktop-sidebar-foot { margin-top:auto; padding:14px 10px 0; border-top:1px solid var(--line); display:flex; align-items:center; gap:9px; color:var(--muted); font-size:11px; }
+body.browser-mode .desktop-sidebar-dot { width:7px; height:7px; border-radius:50%; background:var(--good); box-shadow:0 0 0 4px color-mix(in srgb,var(--good) 14%,transparent); }
+body.browser-mode .desktop-side-nav button[data-screen="notifications"] { position:relative; }
+body.browser-mode .desktop-nav-unread-dot { width:7px;height:7px;flex:0 0 7px;margin-left:auto;border-radius:50%;background:var(--good);opacity:0;transform:scale(.6);transition:opacity .18s,transform .18s; }
+body.browser-mode .desktop-nav-unread-dot.on { opacity:1;transform:scale(1); }
+body.browser-mode .topbar { display:none !important; }
+body.browser-mode .topbar .brand-mark, body.browser-mode .topbar .brand-copy { display:none; }
+body.browser-mode .desktop-compact-nav { display:none !important; }
+body.browser-mode .desktop-compact-nav button { padding:9px 12px; border:0; border-radius:10px; color:var(--muted); background:transparent; font:inherit; font-size:12px; font-weight:650; white-space:nowrap; cursor:pointer; }
+body.browser-mode .desktop-compact-nav button:hover, body.browser-mode .desktop-compact-nav button.active { color:var(--text); background:var(--panel-2); }
+body.browser-mode .topbar .mark-all-read-button { margin-left:auto; }
+body.browser-mode .desktop-page-meta { grid-column:2;grid-row:1;width:100%;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:9px 2px 20px;margin-bottom:24px;border-bottom:1px solid var(--line); }
+body.browser-mode .desktop-page-meta-actions { display:flex;align-items:center;justify-content:flex-end;gap:14px;margin-left:auto; }
+body.browser-mode .desktop-page-meta-actions .mark-all-read-button { margin-left:0; }
+body.browser-mode .desktop-breadcrumb { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:12px; }
+body.browser-mode .desktop-breadcrumb strong { color:var(--text); font-weight:700; }
+body.browser-mode .desktop-breadcrumb-separator { opacity:.45; }
+body.browser-mode .desktop-page-context { color:var(--muted); opacity:.7; font-size:9px; font-weight:750; letter-spacing:.16em; }
+body.browser-mode #app { grid-column:2;grid-row:2;width:100%;max-width:1460px;min-width:0;margin:0 auto;padding-top:0; }
+body.browser-mode .page-title { font-size:clamp(34px,2.25vw,46px); line-height:1.08; }
+body.browser-mode .subtitle { max-width:780px; font-size:14px; line-height:1.65; }
+body.browser-mode .card { padding:clamp(20px,1.55vw,28px); border-radius:20px; }
+body.browser-mode .hero { padding:clamp(22px,1.8vw,32px); border-radius:24px; }
+body.browser-mode .stats-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+body.browser-mode .stat-card { min-height:118px; padding:18px 14px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+body.browser-mode .stat-card .stat-icon { margin:0 auto 8px; }
+body.browser-mode .stat-card .stat-value, body.browser-mode .stat-card .stat-label { width:100%; text-align:center; }
+body.browser-mode .action-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+body.browser-mode .action-card { min-height:122px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; padding:20px; }
+body.browser-mode .action-card .symbol { width:46px; height:46px; flex:0 0 46px; margin:0 auto; }
+body.browser-mode .action-card > span:last-child { width:100%; text-align:center; }
+body.browser-mode .section-head { margin-top:24px; margin-bottom:12px; }
+body.browser-mode .section-head:first-child { margin-top:0; }
+body.browser-mode .admin-key-list, body.browser-mode .admin-users, body.browser-mode .faq-list-card { padding-top:8px; padding-bottom:8px; }
+body.browser-mode .admin-key-list > .divider:first-child, body.browser-mode .admin-users > .divider:first-child { display:none; }
+body.browser-mode .admin-key-list > .divider:last-child, body.browser-mode .admin-users > .divider:last-child { display:none; }
+body.browser-mode .admin-key-row { padding:12px 4px; }
+body.browser-mode .admin-user-row { padding:12px 4px; }
+body.browser-mode .admin-browser-settings { padding:18px 22px; margin-bottom:12px; }
+body.browser-mode .admin-toggle { padding:12px 0; }
+body.browser-mode .admin-browser-note { padding:12px 0 0; margin:0; line-height:1.55; }
+.loading-skeleton-card { width:min(100%,560px);max-width:560px;margin:20px auto;padding:26px; }
+body.browser-mode #app > .desktop-catalog-loading { width:min(100%,560px);max-width:560px;margin:clamp(52px,12vh,120px) auto 0;padding:36px 24px;text-align:center; }
+body.browser-mode #app > .desktop-catalog-loading .dot-matrix-loader { margin-inline:auto; }
+.loading-skeleton-card > p { margin:20px 0 0; color:var(--muted); font-size:12px; text-align:center; }
+.loading-skeleton-card .skeleton-line, .loading-skeleton-card .skeleton-grid i { display:block; border-radius:10px; background:linear-gradient(90deg,color-mix(in srgb,var(--panel-2) 75%,transparent),color-mix(in srgb,var(--line) 70%,transparent),color-mix(in srgb,var(--panel-2) 75%,transparent)); background-size:200% 100%; animation:bp-skeleton 1.35s ease-in-out infinite; }
+.loading-skeleton-card .skeleton-line { height:12px; margin:0 0 12px; }
+.loading-skeleton-card .skeleton-line-title { width:46%; height:22px; }
+.loading-skeleton-card .skeleton-line-copy { width:70%; }
+.loading-skeleton-card .skeleton-line-wide { width:100%; height:74px; margin-top:18px; }
+.loading-skeleton-card .skeleton-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:22px; }
+.loading-skeleton-card .skeleton-grid i { height:68px; }
+@keyframes bp-skeleton { 0%{background-position:100% 0} 100%{background-position:-100% 0} }
+/* Admin: intro and metrics span the content width. Remaining pairs become independently flowing columns. */
+body.browser-mode #app.browser-admin-grid .admin-layout-full { width:100%; }
+body.browser-mode #app.browser-admin-grid .admin-layout-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; gap:22px; width:100%; }
+body.browser-mode #app.browser-admin-grid .admin-column { display:flex;flex-direction:column;gap:22px;min-width:0; }
+body.browser-mode #app.browser-admin-grid .admin-block > .section-head:first-child { margin-top:0; }
+body.browser-mode #app.browser-admin-grid .admin-block { min-width:0; width:100%; }
+body.browser-mode #app.browser-admin-grid .admin-block > .card { width:100%; min-width:0; }
+body.browser-mode #app.browser-admin-grid .admin-user-date { white-space:normal; }
+body.browser-mode #app.browser-admin-grid .admin-user-row { gap:10px; }
+body.browser-mode #app.browser-settings-layout { max-width:1240px; }
+body.browser-mode #app.browser-settings-layout > .card,
+body.browser-mode #app.browser-settings-layout > .section-head,
+body.browser-mode #app.browser-settings-layout > #saveSettings,
+body.browser-mode #app.browser-settings-layout > [data-go="notifications"] { max-width:100%; }
+body.browser-mode .browser-session-card { margin-top:18px; border-color:color-mix(in srgb,var(--danger) 35%,var(--line)); }
+body.browser-mode .browser-logout-button { max-width:360px; margin-top:8px; }
+/* Standard desktop dialogs: centered panels, never mobile bottom sheets. */
+body.browser-mode .modal-backdrop { align-items:center !important; justify-content:center !important; padding:32px !important; overflow:auto !important; }
+body.browser-mode .filter-modal, body.browser-mode .modal-filter, body.browser-mode .boost-modal,
+body.browser-mode .maintenance-modal, body.browser-mode .admin-user-modal, body.browser-mode .product-detail-modal {
+  width:min(900px,calc(100vw - 64px)) !important; max-width:900px !important; min-height:0 !important;
+  max-height:min(88dvh,900px) !important; border-radius:22px !important; overflow:hidden !important; transform:none;
+}
+body.browser-mode .modal-grab, body.browser-mode .filter-modal .modal-grab { display:none !important; }
+body.browser-mode .filter-modal .modal-content, body.browser-mode .modal-filter .modal-content,
+body.browser-mode .boost-modal .modal-content, body.browser-mode .maintenance-modal .modal-content,
+body.browser-mode .admin-user-modal .modal-content, body.browser-mode .product-detail-modal .modal-content {
+  max-height:calc(min(88dvh,900px) - 80px) !important; min-height:0 !important; overflow-y:auto !important; overscroll-behavior:contain;
+}
+body.browser-mode .subscription-key-activation { margin-top:18px; }
+body.browser-mode .subscription-key-activation .button { max-width:420px; }
+body.browser-mode .bottom-nav { display:none !important; }
+@media (min-width: 1500px) {
+  body.browser-mode { --bp-desktop-sidebar-width:260px; }
+  body.browser-mode .app-shell { grid-template-columns:var(--bp-desktop-sidebar-width) minmax(0,1fr); }
+  body.browser-mode .desktop-sidebar { width:var(--bp-desktop-sidebar-width); }
+  body.browser-mode #app.browser-admin-grid .admin-layout-columns { gap:28px; }
+}
+@media (max-width: 1120px) and (min-width: 900px) {
+  body.browser-mode { --bp-desktop-sidebar-width:78px; }
+  body.browser-mode .app-shell { grid-template-columns:var(--bp-desktop-sidebar-width) minmax(0,1fr);column-gap:18px;padding-inline:18px; }
+  body.browser-mode .desktop-sidebar { left:calc((100vw - min(100vw,1760px))/2 + 18px);width:var(--bp-desktop-sidebar-width); }
+  body.browser-mode .desktop-sidebar { padding:18px 10px; align-items:center; }
+  body.browser-mode .desktop-nav-unread-dot { position:absolute;right:8px;top:8px;margin:0; }
+  body.browser-mode .desktop-sidebar-brand { padding-inline:0; border:0; }
+  body.browser-mode .desktop-sidebar-brand span, body.browser-mode .desktop-side-nav button span, body.browser-mode .desktop-sidebar-foot span:not(.desktop-sidebar-dot) { display:none; }
+  body.browser-mode .desktop-side-nav { width:100%; }
+  body.browser-mode .desktop-side-nav button { justify-content:center; padding:0; }
+  body.browser-mode .desktop-compact-nav button { padding-inline:8px; font-size:11px; }
+  body.browser-mode .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  body.browser-mode #app.browser-admin-grid .admin-layout-columns { gap:16px; }
+}
+@media (max-width: 899px) {
+  body.browser-mode .app-shell { display:block;width:100%;max-width:100%;min-height:100vh;padding:0 0 104px; }
+  body.browser-mode .desktop-sidebar { position:static;width:auto;height:auto;max-height:none;overflow:visible; }
+  body.browser-mode .desktop-sidebar, body.browser-mode .desktop-compact-nav, body.browser-mode .desktop-page-meta { display:none !important; }
+  body.browser-mode .topbar { display:flex !important;width:100%;height:64px;padding:0 18px; }
+  body.browser-mode .topbar .brand-mark, body.browser-mode .topbar .brand-copy { display:flex; }
+  body.browser-mode .topbar .brand-copy { display:block; }
+  body.browser-mode #app { width:100%; max-width:760px; margin:0 auto; padding:18px 18px 30px; }
+  body.browser-mode .bottom-nav { display:grid !important; position:fixed; z-index:100; left:50%; bottom:12px; transform:translateX(-50%); width:min(680px,calc(100vw - 24px)); max-width:680px; margin:0; padding:8px 10px; border:1px solid var(--line); border-radius:19px; background:color-mix(in srgb,var(--panel) 94%,transparent); backdrop-filter:blur(22px); box-shadow:0 12px 42px rgba(0,0,0,.28); grid-template-columns:repeat(4,minmax(0,1fr)); }
+  body.browser-mode .bottom-nav[hidden] { display:none !important; }
+  body.browser-mode .bottom-nav button { min-height:54px; justify-content:center; gap:7px; border-radius:13px; }
+  body.browser-mode .bottom-nav button small { font-size:10px; }
+  body.browser-mode .bottom-nav .nav-icon { width:22px; height:22px; flex-basis:22px; }
+  body.browser-mode .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  body.browser-mode #app.browser-admin-grid .admin-layout-columns { display:block; }
+  body.browser-mode #app.browser-admin-grid .admin-layout-full,
+  body.browser-mode #app.browser-admin-grid .admin-column { width:100%; }
+  body.browser-mode .modal-backdrop { align-items:flex-end !important; padding:0 !important; }
+  body.browser-mode .filter-modal, body.browser-mode .modal-filter, body.browser-mode .boost-modal,
+  body.browser-mode .maintenance-modal, body.browser-mode .admin-user-modal, body.browser-mode .product-detail-modal {
+    width:100% !important; max-width:100% !important; max-height:min(90dvh,900px) !important; border-radius:22px 22px 0 0 !important;
+  }
+  body.browser-mode .modal-grab { display:flex !important; }
+}
+
+/* v13 desktop refinement round 2 */
+@media (min-width:900px) {
+  body.browser-mode .home-catalog-stats:not(.buyer-stats) { grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+  body.browser-mode .home-catalog-stats .stat-card { min-width:0; padding-inline:10px; }
+  body.browser-mode .hero { padding:18px 22px; }
+  body.browser-mode .hero .profile-avatar { width:76px !important;height:76px !important;flex:0 0 76px !important; }
+  body.browser-mode .hero .profile-avatar img, body.browser-mode .hero .profile-avatar .avatar { width:76px !important;height:76px !important; }
+  body.browser-mode .hero .hero-row { gap:16px; }
+  body.browser-mode .hero .hero-bottom { padding-top:14px; }
+  body.browser-mode .desktop-sidebar { gap:22px; }
+  body.browser-mode .desktop-side-nav { gap:6px; }
+  body.browser-mode .desktop-side-nav button { min-height:46px; }
+  body.browser-mode #app.browser-admin-grid .admin-layout-columns { margin-top:38px; }
+  body.browser-mode #app.browser-admin-grid .admin-block[data-admin-section="publish-update"] { display:flex;flex-direction:column; }
+  body.browser-mode #app.browser-admin-grid .admin-block[data-admin-section="publish-update"] > .card { flex:1 1 auto; }
+  body.browser-mode .admin-users { padding:12px 18px !important; }
+  body.browser-mode .admin-user-row { width:100%;margin:0;padding:12px 4px; }
+  body.browser-mode #app.browser-settings-layout .theme-choice { min-height:76px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:12px 8px; }
+  body.browser-mode #app.browser-settings-layout > .card:not(.profile-settings-card) { padding-bottom:12px; }
+  body.browser-mode #app.browser-settings-layout > .card:not(.profile-settings-card) .setting-row:last-child { padding-bottom:3px; }
+  body.browser-mode #app.browser-settings-layout .seller-privacy-settings,
+  body.browser-mode #app.browser-settings-layout .notification-settings-card { padding-top:8px !important;padding-bottom:8px !important; }
+  body.browser-mode #app.browser-settings-layout .seller-privacy-settings .setting-row,
+  body.browser-mode #app.browser-settings-layout .notification-settings-card .setting-row { padding-top:8px;padding-bottom:8px; }
+  body.browser-mode #app.browser-settings-layout > #saveSettings,
+  body.browser-mode #app.browser-settings-layout > [data-go="notifications"] { display:flex;width:min(100%,420px);max-width:420px;margin-left:auto;margin-right:auto;justify-content:center; }
+  body.browser-mode .modal-content { position:relative;padding-top:58px !important; }
+  body.browser-mode .favorites-modal .modal-content { padding-top:60px !important; }
+  body.browser-mode .desktop-modal-close { position:absolute;top:16px;right:18px;z-index:8;width:38px;height:38px;display:grid;place-items:center;padding:0;border:0;outline:0;border-radius:50%;background:transparent;color:var(--muted);cursor:pointer;box-shadow:none;transition:color .16s ease,background .16s ease,transform .16s ease; }
+  body.browser-mode .desktop-modal-close svg { width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round; }
+  body.browser-mode .desktop-modal-close:hover { color:var(--text);background:var(--panel-2); }
+  body.browser-mode .desktop-modal-close:active { transform:scale(.9);background:color-mix(in srgb,var(--panel-2) 65%,transparent); }
+  body.browser-mode .favorites-share-actions { display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px; }
+  body.browser-mode .favorites-share-actions .button { flex:0 1 auto;min-width:190px;width:auto; }
+  body.browser-mode .favorite-seller-share-row { justify-content:center; }
+  body.browser-mode .favorite-seller-share-row .favorite-share-button { min-width:220px; }
+}
+
+
+/* Basalt Perfume v13.1 — checklist fixes. Desktop-only rules are kept in this layer. */
+@media (min-width: 900px) {
+  /* Keep fixed navigation and breadcrumbs visible during the first application load. */
+  html.ui-boot-pending body.browser-mode .desktop-sidebar,
+  html.ui-boot-pending body.browser-mode .desktop-page-meta {
+    visibility: visible !important;
+  }
+  /* A glass overlay covers the full right workspace, while the fixed sidebar stays above it. */
+  html.ui-boot-pending body.browser-mode .app-shell {
+    position: relative;
+    isolation: isolate;
+  }
+  html.ui-boot-pending body.browser-mode .app-shell::before { content:none !important; }
+  html.ui-boot-pending body.browser-mode #app,
+  body.browser-mode #app.screen-loading { position:relative; isolation:isolate; }
+  html.ui-boot-pending body.browser-mode #app::before {
+    content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 10%,transparent),color-mix(in srgb,var(--bg) 24%,transparent));
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,black 36px,black calc(100% - 32px),transparent 100%);
+    mask-image:linear-gradient(to bottom,transparent 0,black 36px,black calc(100% - 32px),transparent 100%);
+  }
+  html.ui-boot-pending body.browser-mode #app > *:not(.desktop-catalog-loading) { position:relative; z-index:0; }
+  html.ui-boot-pending body.browser-mode #app > .desktop-catalog-loading { z-index:2; }
+  body.browser-mode #app.screen-loading { opacity:1 !important; transform:none !important; }
+  body.browser-mode #screenLoadingOverlay { position:fixed; top:96px; right:0; bottom:0; left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + var(--bp-desktop-sidebar-width,244px) + clamp(24px,2.5vw,42px)); z-index:55; display:grid; place-items:center; pointer-events:none; background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 12%,transparent),color-mix(in srgb,var(--bg) 25%,transparent)); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); -webkit-mask-image:linear-gradient(to bottom,transparent 0,black 36px,black calc(100% - 32px),transparent 100%); mask-image:linear-gradient(to bottom,transparent 0,black 36px,black calc(100% - 32px),transparent 100%); }
+  body.browser-mode #screenLoadingOverlay .desktop-catalog-loading { position:relative; z-index:1; width:min(100%,560px); max-width:560px; margin:0 auto; padding:32px 24px; text-align:center; }
+  body.browser-mode #screenLoadingOverlay .dot-matrix-loader { margin-inline:auto; }
+  html.ui-boot-pending body.browser-mode #app {
+    position: relative;
+    z-index: 51;
+    min-height: min(620px, calc(100dvh - 120px));
+    display: grid;
+    place-items: center;
+    overflow: visible;
+  }
+  html.ui-boot-pending body.browser-mode #app > .desktop-catalog-loading {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    justify-self: center;
+    width: min(100%, 500px) !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
+    padding: 30px 24px !important;
+    text-align: center;
+  }
+  html.ui-boot-pending body.browser-mode #app > .desktop-catalog-loading .dot-matrix-loader { margin: 0 auto; }
+
+  /* The five seller/admin summary cards, including Favorites, must occupy one row. */
+  body.browser-mode #app .home-catalog-stats:not(.buyer-stats) {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    align-items: stretch;
+  }
+  body.browser-mode #app .home-catalog-stats:not(.buyer-stats) > .favorites-stat-card { grid-column: auto !important; }
+  body.browser-mode .hero .hero-row > .status-label {
+    align-self: flex-start;
+    margin-top: 0 !important;
+    padding: 7px 10px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 99px !important;
+    background: color-mix(in srgb, var(--panel) 70%, transparent) !important;
+  }
+
+  /* A modal title starts at the same top line as the close icon, with safe right clearance. */
+  body.browser-mode .filter-modal .modal-content,
+  body.browser-mode .modal-filter .modal-content,
+  body.browser-mode .boost-modal .modal-content,
+  body.browser-mode .maintenance-modal .modal-content,
+  body.browser-mode .admin-user-modal .modal-content,
+  body.browser-mode .product-detail-modal .modal-content,
+  body.browser-mode .favorites-modal .modal-content {
+    padding-top: 24px !important;
+  }
+  body.browser-mode .modal-content > .eyebrow:first-child,
+  body.browser-mode .modal-content > .modal-head:first-child,
+  body.browser-mode .modal-content > .admin-user-profile:first-child,
+  body.browser-mode .modal-content > .modal-scroll-viewport > .eyebrow:first-child,
+  body.browser-mode .modal-content > .modal-scroll-viewport > .modal-head:first-child,
+  body.browser-mode .modal-content > .modal-scroll-viewport > .admin-user-profile:first-child { margin-top: 0 !important; }
+  body.browser-mode .modal-head { padding-right: 48px; }
+  body.browser-mode .desktop-modal-close { top: 15px; right: 16px; width: 36px; height: 36px; }
+
+  /* Desktop price dial uses native wheel input rather than a held left-button drag. */
+  body.browser-mode .boost-wheel {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    scroll-snap-type: y mandatory !important;
+    scroll-padding-top: 84px;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none;
+    touch-action: pan-y !important;
+    cursor: ns-resize !important;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  body.browser-mode .boost-wheel::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+  body.browser-mode .boost-wheel-row { scroll-snap-align: start !important; scroll-snap-stop: always; }
+  body.browser-mode .boost-wheel.is-dragging { cursor: ns-resize !important; }
+
+  /* Settings profile follows the dashboard hero, but deliberately has no subscription status. */
+  body.browser-mode #app.browser-settings-layout .profile-settings-card-desktop {
+    display: block !important;
+    min-height: 0;
+    padding: 18px 22px !important;
+    margin-bottom: 20px;
+  }
+  body.browser-mode #app.browser-settings-layout .profile-settings-card-desktop .hero-row { align-items: center; gap: 16px; }
+  body.browser-mode #app.browser-settings-layout .profile-settings-card-desktop .profile-avatar,
+  body.browser-mode #app.browser-settings-layout .profile-settings-card-desktop .profile-avatar .avatar { width: 76px !important; height: 76px !important; flex: 0 0 76px !important; }
+  body.browser-mode #app.browser-settings-layout .profile-settings-card-desktop .profile-identity { flex: 1 1 auto; min-width: 0; }
+  body.browser-mode #app.browser-settings-layout .profile-settings-card-desktop .role-badge { margin-left: auto; }
+  body.browser-mode #app.browser-settings-layout .appearance-section-head { margin-top: 24px; margin-bottom: 12px; }
+  body.browser-mode #app.browser-settings-layout .appearance-settings-card,
+  body.browser-mode #app.browser-settings-layout .seller-privacy-settings,
+  body.browser-mode #app.browser-settings-layout .notification-settings-card {
+    padding: 20px 24px !important;
+    margin-bottom: 18px;
+  }
+  body.browser-mode #app.browser-settings-layout .appearance-settings-card .setting-row,
+  body.browser-mode #app.browser-settings-layout .seller-privacy-settings .setting-row,
+  body.browser-mode #app.browser-settings-layout .notification-settings-card .setting-row {
+    min-height: 62px;
+    padding: 13px 0 !important;
+    gap: 14px;
+  }
+  body.browser-mode #app.browser-settings-layout .appearance-settings-card > .divider,
+  body.browser-mode #app.browser-settings-layout .seller-privacy-settings > .divider,
+  body.browser-mode #app.browser-settings-layout .notification-settings-card > .divider { margin: 9px 0; }
+  body.browser-mode #app.browser-settings-layout .appearance-settings-card .setting-row:last-child { padding-bottom: 9px !important; }
+  body.browser-mode #app.browser-settings-layout .theme-choice { min-height: 78px; }
+  body.browser-mode #app.browser-settings-layout .settings-actions {
+    width: min(100%, 760px);
+    margin: 22px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: 14px;
+  }
+  body.browser-mode #app.browser-settings-layout .settings-actions .button {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    justify-content: center;
+    white-space: normal;
+  }
+  body.browser-mode #app.browser-settings-layout .browser-session-card {
+    padding: 24px !important;
+    border-color: var(--line) !important;
+    margin-top: 24px;
+  }
+  body.browser-mode #app.browser-settings-layout .browser-session-card .browser-logout-button { max-width: 320px; }
+
+  /* Admin list cards remain static; only their inner list scrolls. */
+  body.browser-mode .admin-key-list,
+  body.browser-mode .admin-users {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 10px 16px !important;
+  }
+  body.browser-mode .admin-key-scroll,
+  body.browser-mode .admin-users-scroll { max-height: 220px; }
+  body.browser-mode .admin-key-scroll .admin-key-row { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 12px 10px; }
+  body.browser-mode .admin-users-scroll .admin-user-row { display: flex; width: 100%; min-width: 0; margin: 0; padding: 12px 10px; gap: 12px; align-items: center; }
+  body.browser-mode .admin-users-scroll .admin-user-info { flex: 1 1 auto; min-width: 0; }
+  body.browser-mode #app.browser-admin-grid .admin-layout-columns { margin-top: 44px; }
+  body.browser-mode #app.browser-admin-grid .admin-column-left .admin-block[data-admin-section="users"] { order: 6; }
+  body.browser-mode #app.browser-admin-grid .admin-block[data-admin-section="publish-update"] { min-height: 0; }
+  body.browser-mode #app.browser-admin-grid .admin-block[data-admin-section="activation-keys"] .card,
+  body.browser-mode #app.browser-admin-grid .admin-block[data-admin-section="users"] .card { height: auto; }
+
+  /* User modal: compact top edge, horizontal actions, contained list scroll. */
+  body.browser-mode .admin-user-modal .admin-user-profile { margin-top: 0 !important; }
+  body.browser-mode .admin-user-modal .admin-user-file-list .file-card { align-items: center; flex-wrap: nowrap; gap: 12px; }
+  body.browser-mode .admin-user-modal .admin-user-file-list .file-info { min-width: 0; }
+  body.browser-mode .admin-user-modal .admin-user-file-list .file-actions { flex: 0 0 auto; display: flex; align-items: center; flex-direction: row; flex-wrap: nowrap; gap: 8px; margin-left: auto; }
+  body.browser-mode .admin-user-modal .admin-user-file-list .file-actions .mini-button { width: auto !important; min-width: 72px; }
+  body.browser-mode .admin-user-modal .download-all-wrap { display: flex; justify-content: center; margin-top: 12px; }
+  body.browser-mode .admin-user-modal .download-all-wrap .button { width: auto !important; min-width: 0; max-width: 240px; padding-inline: 24px; }
+  body.browser-mode .admin-user-modal .admin-user-favorites-list { max-height: 204px; }
+  body.browser-mode .admin-user-modal .ban-calendar-clock,
+  body.browser-mode .admin-user-modal .ban-calendar-clock.has-date,
+  body.browser-mode .maintenance-modal .ban-calendar-clock,
+  body.browser-mode .maintenance-modal .ban-calendar-clock.has-date {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.08fr) minmax(260px, .92fr) !important;
+    align-items: start;
+    gap: 20px !important;
+    width: 100%;
+  }
+  body.browser-mode .admin-user-modal .ban-calendar,
+  body.browser-mode .admin-user-modal .ban-clock-panel,
+  body.browser-mode .maintenance-modal .ban-calendar,
+  body.browser-mode .maintenance-modal .ban-clock-panel { width: 100%; min-width: 0; }
+  body.browser-mode .admin-user-modal .ban-clock-panel,
+  body.browser-mode .maintenance-modal .ban-clock-panel { padding-top: 0 !important; }
+
+  /* Notifications use one text column for both expanded content and its date. */
+  body.browser-mode .notification-list { padding: 9px 20px !important; }
+  body.browser-mode .notification-accordion:first-child .notification-heading { padding-top: 10px; }
+  body.browser-mode .notification-accordion:last-child .notification-heading { padding-bottom: 10px; }
+  body.browser-mode .notification-details-inner { padding-left: 0; }
+  body.browser-mode .notification-details-inner > p,
+  body.browser-mode .notification-detail-time { padding-left: 50px !important; padding-right: 8px !important; margin-left: 0 !important; }
+  body.browser-mode .notification-detail-time { padding-top: 0 !important; padding-bottom: 12px !important; }
+
+  /* Consistent interactive feedback across desktop controls. */
+  body.browser-mode button:not(:disabled),
+  body.browser-mode [role="button"]:not([aria-disabled="true"]) { transition: background-color .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s cubic-bezier(.2,.8,.2,1), opacity .18s ease; }
+  body.browser-mode .card button:hover:not(:disabled),
+  body.browser-mode .admin-user-row:hover,
+  body.browser-mode .admin-key-action:hover { border-color: var(--accent-border, var(--line)); }
+  body.browser-mode button:active:not(:disabled) { transform: scale(.985); }
+  body.browser-mode button:focus-visible,
+  body.browser-mode [role="button"]:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent) 70%, var(--text)); outline-offset: 3px; }
+  body.browser-mode button:disabled { cursor: not-allowed; opacity: .55; transform: none; }
+}
+
+@media (max-width: 1120px) and (min-width: 900px) {
+  body.browser-mode #screenLoadingOverlay { left:calc((100vw - min(100vw,1760px))/2 + 18px + 78px + 18px); }
+}
+@media (min-width: 1500px) {
+  body.browser-mode #screenLoadingOverlay { left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + var(--bp-desktop-sidebar-width,260px) + clamp(24px,2.5vw,42px)); }
+}
+
+/* Narrow browser layout intentionally follows the existing mobile browser shell. */
+@media (max-width: 899px) {
+  body.browser-mode .settings-actions { display: flex; flex-direction: column; gap: 12px; }
+  body.browser-mode .settings-actions .button { width: 100%; }
+}
+
+/* Keep both analog date/time pickers side-by-side while narrowing the desktop viewport. */
+@media (min-width: 900px) and (max-width: 1040px) {
+  body.browser-mode .admin-user-modal .ban-calendar-clock,
+  body.browser-mode .admin-user-modal .ban-calendar-clock.has-date,
+  body.browser-mode .maintenance-modal .ban-calendar-clock,
+  body.browser-mode .maintenance-modal .ban-calendar-clock.has-date {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, .88fr) !important;
+    gap: 14px !important;
+  }
+  body.browser-mode .admin-user-modal .ban-clock-panel,
+  body.browser-mode .maintenance-modal .ban-clock-panel { min-width: 0; }
+}
+
+/* v13.1 final QA: consistent desktop scrollbar and accessible interaction states. */
+@media (min-width: 900px) {
+  /* Use one restrained scrollbar language for any actually-scrollable desktop region. */
+  html:has(body.browser-mode) {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--muted) 52%, transparent) transparent;
+  }
+  html:has(body.browser-mode)::-webkit-scrollbar { width: 9px; height: 9px; }
+  html:has(body.browser-mode)::-webkit-scrollbar-track { background: transparent; }
+  html:has(body.browser-mode)::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--muted) 48%, transparent);
+    border: 2px solid transparent;
+    border-radius: 99px;
+    background-clip: padding-box;
+  }
+  body.browser-mode * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--muted) 52%, transparent) transparent;
+  }
+  body.browser-mode *::-webkit-scrollbar { width: 8px; height: 8px; }
+  body.browser-mode *::-webkit-scrollbar-track { background: transparent; }
+  body.browser-mode *::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--muted) 48%, transparent);
+    border: 2px solid transparent;
+    border-radius: 99px;
+    background-clip: padding-box;
+  }
+  body.browser-mode *::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--text) 65%, transparent);
+    background-clip: padding-box;
+  }
+  body.browser-mode .desktop-sidebar,
+  body.browser-mode .modal-content,
+  body.browser-mode .admin-key-scroll,
+  body.browser-mode .admin-users-scroll { scrollbar-gutter: stable; }
+  /* These controls deliberately hide the native scrollbar and keep their own affordance. */
+  body.browser-mode .boost-wheel,
+  body.browser-mode .admin-user-favorites-list {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  body.browser-mode .boost-wheel::-webkit-scrollbar,
+  body.browser-mode .admin-user-favorites-list::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* Bring remaining interactive surfaces in line with the mobile transition system. */
+  body.browser-mode .desktop-side-nav button,
+  body.browser-mode .desktop-compact-nav button,
+  body.browser-mode .action-card,
+  body.browser-mode .notification-heading,
+  body.browser-mode .theme-choice,
+  body.browser-mode .admin-toggle,
+  body.browser-mode .admin-user-row,
+  body.browser-mode .admin-key-action,
+  body.browser-mode .custom-select-trigger,
+  body.browser-mode .custom-select-option,
+  body.browser-mode .setting-row .toggle {
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease,
+      box-shadow .18s ease, transform .18s cubic-bezier(.2,.8,.2,1), opacity .18s ease;
+  }
+  body.browser-mode input:not([type="checkbox"]):focus-visible,
+  body.browser-mode textarea:focus-visible,
+  body.browser-mode select:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent) 72%, var(--text));
+    outline-offset: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.browser-mode button,
+  body.browser-mode [role="button"],
+  body.browser-mode .admin-user-row,
+  body.browser-mode .admin-key-row,
+  body.browser-mode .desktop-sidebar button {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* v13.3 desktop workspace: keep breadcrumb static while only the page body blurs. */
+@media (min-width:900px) {
+  body.browser-mode .desktop-page-meta { position:sticky; top:0; z-index:65; min-height:72px; margin-left:0; margin-right:0; background:color-mix(in srgb,var(--bg) 88%,transparent); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); border-bottom:1px solid var(--line); }
+  html.ui-boot-pending body.browser-mode #app::before { inset:0; }
+  body.browser-mode #app.browser-settings-layout { width:100%; max-width:100%; margin-left:0; margin-right:0; justify-self:stretch; }
+  body.browser-mode #app .web-upload-card .file-icon { display:none !important; }
+  body.browser-mode #app .web-upload-card .button.full, body.browser-mode #app .web-upload-card .web-upload-drop { max-width:100%; }
+  body.browser-mode #app .price-files-download-all, body.browser-mode #app #downloadAllFiles { width:max-content; min-width:220px; max-width:320px; margin:14px auto 0; display:flex; justify-content:center; }
+  body.browser-mode #app .developer-link, body.browser-mode #app #developerLink { width:max-content; max-width:min(100%,360px); margin-inline:auto; display:flex; justify-content:center; }
+  body.browser-mode #app .theme-title-row { padding-top:14px; padding-bottom:14px; }
+  body.browser-mode #app .theme-grid { margin-top:12px; margin-bottom:10px; }
+  body.browser-mode .admin-key-list { position:relative; padding-right:2px !important; }
+  body.browser-mode .admin-key-scroll { padding-right:10px; }
+  body.browser-mode .admin-users { padding:4px 12px !important; }
+  body.browser-mode .admin-users-scroll { padding:2px 2px; }
+  body.browser-mode .admin-users-scroll .admin-user-row { width:100%; margin:0; padding:10px 12px; }
+}
+
+@media(min-width:900px){
+ body.browser-mode #app .download-all-wrap{display:flex;justify-content:center;margin-top:14px;}
+ body.browser-mode #app .download-all-wrap .button{width:auto !important;min-width:0;max-width:300px;padding-inline:28px;}
+ body.browser-mode #app .telegram-link#developerLink{width:max-content !important;min-width:240px;max-width:min(100%,360px);margin-inline:auto;}
+ body.browser-mode #app .setting-row:has(.theme-choice){padding-block:16px;}
+}
+
+/* v13.4: stable desktop breadcrumb, fixed loader and sidebar notifications. */
+@media (min-width:900px) {
+  body.browser-mode .desktop-page-meta {
+    position:fixed !important; top:0 !important;
+    left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + var(--bp-desktop-sidebar-width,244px) + clamp(24px,2.5vw,42px)) !important;
+    right:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px)) !important;
+    width:auto !important; min-height:72px; height:72px; margin:0 !important;
+    padding:10px 2px 12px !important; align-self:auto; z-index:65;
+    background:color-mix(in srgb,var(--panel) 78%,transparent) !important;
+    -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--line);
+  }
+  body.browser-mode #app { padding-top:72px !important; }
+  body.browser-mode #screenLoadingOverlay {
+    position:fixed !important; top:72px !important; bottom:0 !important;
+    left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + var(--bp-desktop-sidebar-width,244px) + clamp(24px,2.5vw,42px)) !important;
+    right:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px)) !important;
+    z-index:55; display:grid; place-items:center; pointer-events:none;
+    opacity:0; visibility:hidden; transition:opacity .16s ease,visibility .16s ease;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 12%,transparent),color-mix(in srgb,var(--bg) 25%,transparent));
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,black 30px,black calc(100% - 28px),transparent 100%);
+    mask-image:linear-gradient(to bottom,transparent 0,black 30px,black calc(100% - 28px),transparent 100%);
+  }
+  body.browser-mode #screenLoadingOverlay.is-visible { opacity:1; visibility:visible; }
+  body.browser-mode #screenLoadingOverlay .desktop-catalog-loading { width:min(100%,560px); max-width:560px; margin:0 auto; padding:32px 24px; text-align:center; }
+  body.browser-mode #screenLoadingOverlay .dot-matrix-loader { margin-inline:auto; }
+  body.browser-mode .desktop-sidebar { position:fixed; }
+  body.browser-mode .desktop-sidebar #toast {
+    position:fixed !important; left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + 12px) !important;
+    right:auto !important; bottom:34px !important; width:220px !important; max-width:calc(100vw - 24px) !important;
+    margin:0; text-align:center; transform:translateY(18px); opacity:0; z-index:80;
+    transition:opacity .2s ease,transform .2s ease;
+  }
+  body.browser-mode .desktop-sidebar #toast.show { opacity:1; transform:translateY(0); }
+  body.browser-mode .filter-modal,
+  body.browser-mode .modal-filter,
+  body.browser-mode .boost-modal,
+  body.browser-mode .maintenance-modal,
+  body.browser-mode .admin-user-modal,
+  body.browser-mode .product-detail-modal { padding-left:clamp(20px,2.4vw,30px) !important; padding-right:calc(clamp(20px,2.4vw,30px) - 8px) !important; }
+  body.browser-mode .filter-modal .modal-content,
+  body.browser-mode .modal-filter .modal-content,
+  body.browser-mode .boost-modal .modal-content,
+  body.browser-mode .maintenance-modal .modal-content,
+  body.browser-mode .admin-user-modal .modal-content,
+  body.browser-mode .product-detail-modal .modal-content { padding-left:0 !important; padding-right:0 !important; }
+  body.browser-mode input:not([type="checkbox"]):focus,
+  body.browser-mode input:not([type="checkbox"]):focus-visible,
+  body.browser-mode textarea:focus,
+  body.browser-mode textarea:focus-visible,
+  body.browser-mode select:focus,
+  body.browser-mode select:focus-visible { outline:none !important; box-shadow:none !important; border-color:var(--accent-border,var(--line)) !important; }
+  body.browser-mode #app .web-upload-card .web-upload-status,
+  body.browser-mode #app .web-upload-card .web-upload-note { text-align:center; }
+  body.browser-mode #app .web-upload-card #uploadPriceFile { width:max-content !important; min-width:220px; max-width:min(100%,340px); margin:0 auto; display:flex; }
+  body.browser-mode #app .web-upload-card .web-upload-drop { max-width:100%; }
+  body.browser-mode .desktop-sidebar #toast.show { pointer-events:none; }
+}
+@media (min-width:1500px) {
+  body.browser-mode .desktop-page-meta,
+  body.browser-mode #screenLoadingOverlay {
+    left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + var(--bp-desktop-sidebar-width,260px) + clamp(24px,2.5vw,42px)) !important;
+  }
+}
+@media (max-width:1120px) and (min-width:900px) {
+  body.browser-mode .desktop-page-meta,
+  body.browser-mode #screenLoadingOverlay {
+    left:calc((100vw - min(100vw,1760px))/2 + 18px + 78px + 18px) !important;
+  }
+  body.browser-mode .desktop-page-meta,
+  body.browser-mode #screenLoadingOverlay { right:18px !important; }
+}
+@media (min-width:900px) {
+  body.browser-mode #screenLoadingOverlay .desktop-catalog-loading { animation:none !important; transform:none !important; }
+}
+@media (max-width:1120px) and (min-width:900px) {
+  body.browser-mode .desktop-sidebar #toast { left:calc((100vw - min(100vw,1760px))/2 + 18px + 12px) !important; width:250px !important; max-width:calc(100vw - 24px) !important; }
+}
+
+@media (min-width:900px){html.ui-boot-pending body.browser-mode #app::before{content:none !important;}}
+@media (min-width:900px) {
+  body.browser-mode .ban-clock-number:active { transform:translate(-50%,-50%) !important; }
+}
+
+/* v13.5 requested desktop polish */
+@media (min-width:900px) {
+  body.browser-mode .desktop-page-meta {
+    left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + var(--bp-desktop-sidebar-width,244px) + clamp(24px,2.5vw,42px) - 4px) !important;
+    right:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) - 4px) !important;
+    background:color-mix(in srgb,var(--panel) 54%,transparent) !important;
+    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+    -webkit-mask-image:linear-gradient(to right,transparent 0,black 22px,black calc(100% - 22px),transparent 100%);
+    mask-image:linear-gradient(to right,transparent 0,black 22px,black calc(100% - 22px),transparent 100%);
+  }
+  body.browser-mode #app > .desktop-catalog-loading { display:none !important; }
+  body.browser-mode .notifications-content-toolbar { display:flex;justify-content:flex-end;align-items:center;min-height:42px;margin:-8px 0 12px; }
+  body.browser-mode .notifications-content-toolbar .mark-all-read-button { margin:0; }
+  body.desktop-shell.browser-mode .desktop-nav-unread-dot { width:8px;height:8px;flex:0 0 8px;margin-left:auto;border-radius:50%;background:#ff5b65;box-shadow:0 0 0 3px color-mix(in srgb,#ff5b65 18%,transparent),0 0 10px color-mix(in srgb,#ff5b65 70%,transparent);opacity:0;transform:scale(.65);transition:opacity .18s ease,transform .18s ease; }
+  body.desktop-shell.browser-mode .desktop-nav-unread-dot.on { opacity:1;transform:scale(1); }
+  body.desktop-shell.browser-mode .desktop-nav-unread-dot.on::after { content:none; }
+  body.browser-mode #app.browser-settings-layout .theme-grid { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:18px 0 14px; }
+  body.browser-mode #app.browser-settings-layout .theme-choice { min-height:62px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;padding:10px 13px;text-align:left;font-size:12px; }
+  body.browser-mode #app.browser-settings-layout .theme-choice .swatch { display:flex;position:relative;flex:0 0 34px;width:34px;height:24px;align-items:center;justify-content:flex-start;margin:0 2px 0 0; }
+  body.browser-mode #app.browser-settings-layout .theme-choice .swatch i { width:20px;height:20px;position:absolute;top:2px;border-width:1px; }
+  body.browser-mode #app.browser-settings-layout .theme-choice .swatch i:first-child { left:0;z-index:2; }
+  body.browser-mode #app.browser-settings-layout .theme-choice .swatch i:last-child { left:13px;z-index:1; }
+  body.browser-mode #app.browser-settings-layout .setting-row:has(.theme-choice) { column-gap:20px; }
+  body.browser-mode .admin-users-scroll .admin-user-row { padding:10px 0 !important; }
+  body.browser-mode .admin-users-scroll .admin-user-row:hover { background:color-mix(in srgb,var(--accent) 3%,transparent) !important;box-shadow:none !important; }
+  body.browser-mode .admin-users-scroll .admin-user-row:active { transform:none !important; }
+  body.browser-mode .site-key-activation-modal .modal-actions { background:transparent !important; }
+  body.browser-mode .preview-badge { position:fixed !important;top:14px !important;left:50% !important;bottom:auto !important;margin:0 !important;transform:translate(-50%,-8px) !important;z-index:120 !important; }
+  body.browser-mode .preview-badge.visible { transform:translate(-50%,0) !important; }
+  body.browser-mode .faq-q:active, body.browser-mode .faq-q:focus:not(:focus-visible) { transform:none !important;filter:none !important; }
+  body.browser-mode .delete-confirm-ready:hover { border:1px solid var(--danger) !important;box-shadow:0 0 0 1px color-mix(in srgb,var(--danger) 35%,transparent) !important; }
+}
+@media (max-width:1120px) and (min-width:900px) {
+  body.browser-mode .desktop-page-meta { left:calc((100vw - min(100vw,1760px))/2 + 18px + 78px + 18px - 4px) !important;right:14px !important; }
+}
+/* Shared interaction fixes: no press-compression on FAQ rows and quiet admin hover. */
+.faq-item .faq-q,.faq-item .faq-q:active { transform:none !important;filter:none !important; }
+.admin-users-scroll .admin-user-row { padding-inline:0 !important; }
+.admin-users-scroll .admin-user-row:hover { background:color-mix(in srgb,var(--accent) 3%,transparent) !important;box-shadow:none !important; }
+.admin-users-scroll .admin-user-row:active { transform:none !important; }
+.site-key-activation-modal .modal-actions { background:transparent !important; }
+.preview-badge { position:fixed !important;top:14px !important;bottom:auto !important;left:50% !important;margin:0 !important;transform:translate(-50%,-8px) !important; }
+.preview-badge.visible { transform:translate(-50%,0) !important; }
+
+
+/* v13.6: keep a crisp blur across desktop-page-meta and extend it softly beyond both sides. */
+@media (min-width:900px) {
+  body.browser-mode .desktop-page-meta {
+    isolation:isolate;overflow:visible !important;
+    -webkit-mask-image:none !important;mask-image:none !important;
+  }
+  body.browser-mode .desktop-page-meta::before,
+  body.browser-mode .desktop-page-meta::after {
+    content:"";position:absolute;top:0;bottom:0;width:38px;z-index:0;pointer-events:none;
+    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  }
+  body.browser-mode .desktop-page-meta::before {
+    left:-38px;
+    background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--panel) 45%,transparent));
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 100%);mask-image:linear-gradient(90deg,transparent 0,#000 100%);
+  }
+  body.browser-mode .desktop-page-meta::after {
+    right:-38px;
+    background:linear-gradient(90deg,color-mix(in srgb,var(--panel) 45%,transparent),transparent);
+    -webkit-mask-image:linear-gradient(90deg,#000 0,transparent 100%);mask-image:linear-gradient(90deg,#000 0,transparent 100%);
+  }
+  body.browser-mode .desktop-page-meta > * {position:relative;z-index:1;}
+
+  /* The scroll area owns the scrollbar; offset it outward while preserving comfortable text padding. */
+  body.browser-mode .filter-modal .modal-content,
+  body.browser-mode .modal-filter .modal-content,
+  body.browser-mode .boost-modal .modal-content,
+  body.browser-mode .maintenance-modal .modal-content,
+  body.browser-mode .admin-user-modal .modal-content,
+  body.browser-mode .product-detail-modal .modal-content {
+    padding-left:clamp(18px,2.1vw,26px) !important;
+    padding-right:clamp(14px,1.7vw,20px) !important;
+    margin-right:calc(-1 * clamp(12px,1.5vw,18px)) !important;
+    width:calc(100% + clamp(12px,1.5vw,18px)) !important;
+  }
+  body.browser-mode .filter-modal,
+  body.browser-mode .modal-filter,
+  body.browser-mode .boost-modal,
+  body.browser-mode .maintenance-modal,
+  body.browser-mode .admin-user-modal,
+  body.browser-mode .product-detail-modal {padding-right:clamp(20px,2.2vw,28px) !important;}
+
+  body.browser-mode .desktop-modal-close {right:26px !important;}
+  body.browser-mode .site-key-activation-modal .modal-actions {
+    display:grid !important;grid-template-columns:minmax(0,1.6fr) minmax(0,.85fr) !important;
+    gap:12px !important;padding-left:clamp(18px,2.1vw,26px) !important;padding-right:clamp(18px,2.1vw,26px) !important;
+  }
+  body.browser-mode .site-key-activation-modal .modal-actions #submitSiteActivationKey {width:100% !important;}
+  body.browser-mode .site-key-activation-modal .modal-actions [data-site-key-close] {width:100% !important;}
+}
+
+/* v13.6: desktop admin users list is edge-to-edge inside its card. */
+@media (min-width:900px) {
+  body.browser-mode .card.admin-users {padding-left:0 !important;padding-right:0 !important;}
+  body.browser-mode .admin-users-scroll {padding-left:0 !important;padding-right:0 !important;margin-left:0 !important;margin-right:0 !important;}
+  body.browser-mode .admin-users-scroll .admin-user-row {width:100% !important;max-width:none !important;margin-left:0 !important;margin-right:0 !important;padding-left:0 !important;padding-right:0 !important;}
+}
+
+
+/* v13.7: desktop-only page gutter, admin-row inset, and modal scrollbar gutter. */
+@media (min-width:900px) {
+  body.desktop-shell.browser-mode #app {
+    box-sizing:border-box;
+    padding-right:14px !important;
+  }
+  body.desktop-shell.browser-mode .admin-users-scroll .admin-user-row[data-admin-user] {
+    padding-left:9px !important;
+    padding-right:6px !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal .modal-content,
+  body.desktop-shell.browser-mode .modal-filter .modal-content,
+  body.desktop-shell.browser-mode .boost-modal .modal-content,
+  body.desktop-shell.browser-mode .maintenance-modal .modal-content,
+  body.desktop-shell.browser-mode .admin-user-modal .modal-content,
+  body.desktop-shell.browser-mode .product-detail-modal .modal-content {
+    width:auto !important;
+    margin-right:10px !important;
+    padding-left:clamp(20px,2.2vw,28px) !important;
+    padding-right:clamp(11px,1.35vw,17px) !important;
+    box-sizing:border-box !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal .modal-actions,
+  body.desktop-shell.browser-mode .modal-filter .modal-actions,
+  body.desktop-shell.browser-mode .boost-modal .modal-actions,
+  body.desktop-shell.browser-mode .maintenance-modal .modal-actions,
+  body.desktop-shell.browser-mode .admin-user-modal .modal-actions,
+  body.desktop-shell.browser-mode .product-detail-modal .modal-actions {
+    padding-left:clamp(20px,2.2vw,28px) !important;
+    padding-right:clamp(12px,1.5vw,18px) !important;
+  }
+}
+
+
+/* v13.7: keep the 4x4 section loader above the full-page boot blur. */
+@media (min-width:900px) {
+  body.desktop-shell.browser-mode #screenLoadingOverlay { z-index:10000 !important; }
+}
+
+
+/* v13.9: reliable unread indicator in the desktop sidebar navigation. */
+body.desktop-shell.browser-mode .desktop-side-nav button[data-screen="notifications"] .desktop-nav-unread-dot {
+  display:block !important;visibility:visible !important;position:static !important;
+  width:8px !important;height:8px !important;min-width:8px !important;min-height:8px !important;
+  flex:0 0 8px !important;margin-left:auto !important;border:0 !important;border-radius:50% !important;
+  background:#ff5b65 !important;box-shadow:0 0 0 3px rgba(255,91,101,.18),0 0 11px rgba(255,91,101,.78) !important;
+  opacity:0 !important;transform:scale(.65);transition:opacity .18s ease,transform .18s ease;
+}
+body.desktop-shell.browser-mode .desktop-side-nav button[data-screen="notifications"] .desktop-nav-unread-dot.on {
+  opacity:1 !important;transform:scale(1) !important;
+}
+
+
+/* v13.10.15 desktop visual refinements */
+@media (min-width:900px) {
+  body.desktop-shell.browser-mode .desktop-nav-unread-dot {
+    background:var(--accent) !important;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 17%,transparent),
+               0 0 9px color-mix(in srgb,var(--accent) 38%,transparent) !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal .modal-content,
+  body.desktop-shell.browser-mode .modal-filter .modal-content {
+    padding-left:0 !important; padding-right:0 !important;
+    margin-left:0 !important; margin-right:0 !important; width:100% !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal,
+  body.desktop-shell.browser-mode .modal-filter {
+    scrollbar-width:thin !important;
+    scrollbar-color:color-mix(in srgb,var(--muted) 48%,transparent) transparent !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal::-webkit-scrollbar,
+  body.desktop-shell.browser-mode .modal-filter::-webkit-scrollbar { width:7px !important; }
+  body.desktop-shell.browser-mode .filter-modal::-webkit-scrollbar-thumb,
+  body.desktop-shell.browser-mode .modal-filter::-webkit-scrollbar-thumb {
+    border:2px solid transparent !important; border-radius:99px !important; background-clip:padding-box !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal .modal-content,
+  body.desktop-shell.browser-mode .modal-filter .modal-content { position:relative !important; }
+  body.desktop-shell.browser-mode .filter-modal .desktop-modal-close,
+  body.desktop-shell.browser-mode .modal-filter .desktop-modal-close {
+    position:absolute !important; top:12px !important; right:12px !important; z-index:20 !important;
+  }
+  body.desktop-shell.browser-mode #productResults {
+    display:grid !important; grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    align-items:stretch !important; gap:14px !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card {
+    display:flex !important; flex-direction:column !important; align-items:stretch !important;
+    justify-content:flex-start !important; gap:12px !important; min-width:0 !important;
+    min-height:230px !important; height:100% !important; margin:0 !important; padding:18px !important;
+    border-radius:18px !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-card-info {
+    min-width:0 !important; width:100% !important; flex:1 1 auto !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-name {
+    font-size:15px !important; line-height:1.42 !important; overflow-wrap:anywhere !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-sub {
+    font-size:12px !important; line-height:1.5 !important; overflow-wrap:anywhere !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap {
+    display:flex !important; flex-direction:column !important; align-items:flex-start !important;
+    gap:5px !important; margin-top:auto !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price { font-size:19px !important; }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-tag {
+    width:100% !important; display:flex !important; flex-wrap:wrap !important; gap:6px !important;
+  }
+  body.desktop-shell.browser-mode .upload-conflict-actions {
+    display:flex !important; justify-content:center !important; align-items:center !important;
+    width:100% !important; padding-left:20px !important; padding-right:20px !important;
+  }
+  body.desktop-shell.browser-mode .upload-conflict-actions #confirmUploadConflictChoices {
+    display:block !important; width:min(360px,80%) !important; min-width:260px !important;
+    margin:0 auto !important; flex:0 0 auto !important;
+  }
+}
+/* The cancel action remains available through Escape/backdrop; only its redundant footer button is removed. */
+.upload-conflict-actions #cancelUploadConflictBatch { display:none !important; }
+@media (min-width:900px) {
+  body.desktop-shell.browser-mode .filter-modal,
+  body.desktop-shell.browser-mode .modal-filter {
+    padding-left:0 !important; padding-right:0 !important;
+    scrollbar-gutter:auto !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal::-webkit-scrollbar-track,
+  body.desktop-shell.browser-mode .modal-filter::-webkit-scrollbar-track {
+    margin-block:9px !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal .modal-content > .desktop-modal-close,
+  body.desktop-shell.browser-mode .modal-filter .modal-content > .desktop-modal-close {
+    top:12px !important; right:12px !important;
+  }
+}
+
+/* v13.10.16: desktop visual corrections */
+@media (min-width:900px) {
+  body.desktop-shell.browser-mode #productResults > .product-card .product-card-info { flex:1 1 auto !important; }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-tag { order:2 !important; margin-top:auto !important; }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap {
+    order:3 !important; margin-top:0 !important; align-self:stretch !important;
+    align-items:flex-start !important; text-align:left !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap .product-price { order:2 !important; }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap .product-price-boost { order:1 !important; }
+  body.desktop-shell.browser-mode .desktop-nav-unread-dot,
+  body.desktop-shell.browser-mode .desktop-side-nav button[data-screen="notifications"] .desktop-nav-unread-dot {
+    background:var(--accent) !important;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 17%,transparent),
+               0 0 9px color-mix(in srgb,var(--accent) 38%,transparent) !important;
+  }
+  body.desktop-shell.browser-mode .notifications-content-toolbar {
+    position:relative !important; display:block !important; width:100% !important;
+    height:0 !important; min-height:0 !important; margin:0 !important; padding:0 !important;
+    overflow:visible !important; pointer-events:none !important;
+  }
+  body.desktop-shell.browser-mode .notifications-content-toolbar .mark-all-read-button {
+    position:absolute !important; top:-42px !important; right:0 !important;
+    margin:0 !important; pointer-events:auto !important;
+  }
+  body.desktop-shell.browser-mode .modal-content {
+    padding-left:24px !important; padding-right:24px !important;
+  }
+  body.desktop-shell.browser-mode .filter-modal .modal-content,
+  body.desktop-shell.browser-mode .modal-filter .modal-content {
+    padding-left:24px !important; padding-right:24px !important;
+  }
+}
+
+
+/* v13.10.17: desktop layout refinements */
+@media (min-width:900px) {
+  /* Keep the boosted price above; align the base price and favourite control on one bottom row. */
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) 30px !important;
+    grid-template-rows:auto auto !important;
+    align-items:end !important;
+    justify-items:stretch !important;
+    column-gap:10px !important;
+    row-gap:5px !important;
+    width:100% !important;
+    margin-top:0 !important;
+    text-align:left !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap > .product-price-boost {
+    grid-column:1 / -1 !important; grid-row:1 !important; order:0 !important;
+    justify-self:start !important; margin:0 !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap > .product-price {
+    grid-column:1 !important; grid-row:2 !important; order:0 !important;
+    justify-self:start !important; align-self:end !important; white-space:nowrap !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-price-wrap > .product-favorite-under-price {
+    grid-column:2 !important; grid-row:2 !important; order:0 !important;
+    display:flex !important; justify-content:center !important; align-items:center !important;
+    width:30px !important; margin:0 !important; padding:0 !important; align-self:end !important;
+  }
+  body.desktop-shell.browser-mode #productResults > .product-card .product-favorite-under-price .favorite-toggle {
+    width:28px !important; min-width:28px !important; height:28px !important;
+  }
+
+  body.browser-mode .theme-choice {
+    display:flex !important; flex-direction:column !important;
+    justify-content:center !important; align-items:center !important;
+    text-align:center !important; gap:8px !important;
+  }
+  body.browser-mode .theme-choice .swatch {
+    display:flex !important; justify-content:center !important; align-items:center !important;
+    margin-inline:auto !important;
+  }
+  body.browser-mode .subtitle { margin-bottom:clamp(34px,3vw,34px) !important; }
+  body.desktop-shell.browser-mode .notifications-content-toolbar .icon-button.mark-all-read-button.mark-all-read-text-button,
+  body.desktop-shell.browser-mode .notifications-content-toolbar .mark-all-read-button.mark-all-read-text-button {
+    top:-76px !important;
+  }
+  body.browser-mode #app .card:has(#developerLink) {
+    padding-bottom:clamp(14px,1.1vw,20px) !important;
+  }
+}
+
+
+/* A phone/tablet browser is redirected to /m/* before paint; never expose desktop shell. */
+html[data-bp-ui-mode="mobile-browser"] body.desktop-shell { visibility: hidden !important; }
+
+
+/* v13.10.21 — responsive desktop navigation, toasts and loading focus */
+@media (min-width:1121px) {
+  body.browser-mode.desktop-sidebar-collapsed { --bp-desktop-sidebar-width:78px; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-sidebar { width:78px; padding:18px 10px; align-items:center; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-sidebar-brand { justify-content:center; padding:0 0 20px; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-sidebar-brand span,
+  body.browser-mode.desktop-sidebar-collapsed .desktop-side-nav button span,
+  body.browser-mode.desktop-sidebar-collapsed .desktop-sidebar-foot span:not(.desktop-sidebar-dot) { display:none; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-side-nav { width:100%; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-side-nav button { justify-content:center; padding:0; position:relative; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-nav-unread-dot { position:absolute;right:7px;top:7px;margin:0; }
+}
+body.browser-mode .app-shell { transition:grid-template-columns .28s cubic-bezier(.2,.7,.2,1); }
+body.browser-mode .desktop-sidebar { transition:width .28s cubic-bezier(.2,.7,.2,1),padding .28s cubic-bezier(.2,.7,.2,1); }
+body.browser-mode .desktop-sidebar-brand { min-height:64px; transition:padding .28s ease,gap .28s ease; }
+body.browser-mode .desktop-sidebar-brand img { flex:0 0 42px; }
+body.browser-mode .desktop-sidebar-brand:focus-visible { outline:2px solid var(--text);outline-offset:3px;border-radius:12px; }
+body.browser-mode #toast {
+  position:fixed !important;top:14px !important;left:0 !important;right:0 !important;bottom:auto !important;
+  width:100vw !important;max-width:none !important;margin:0 !important;padding:13px 22px !important;
+  border-radius:0 0 16px 16px !important;text-align:center !important;
+  display:flex;align-items:center;justify-content:center;min-height:48px;box-sizing:border-box;
+  transform:translateY(-12px) !important;opacity:0;pointer-events:none;z-index:130 !important;
+  transition:opacity .2s ease,transform .2s ease !important;
+}
+body.browser-mode #toast.show { opacity:1;transform:translateY(0) !important; }
+@media (min-width:900px) {
+  body.browser-mode #screenLoadingOverlay {
+    top:64px !important;
+    left:calc((100vw - min(100vw,1760px))/2 + clamp(20px,2.6vw,44px) + var(--bp-desktop-sidebar-width,244px) + clamp(24px,2.5vw,42px) - 12px) !important;
+    place-items:start center !important;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,black 9px,black calc(100% - 9px),transparent 100%) !important;
+    mask-image:linear-gradient(to bottom,transparent 0,black 9px,black calc(100% - 9px),transparent 100%) !important;
+  }
+  body.browser-mode #screenLoadingOverlay .desktop-catalog-loading {
+    margin-top:var(--bp-desktop-loader-offset,150px) !important;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  body.browser-mode .app-shell,body.browser-mode .desktop-sidebar,body.browser-mode .desktop-sidebar-brand { transition:none !important; }
+}
+
+
+/* v13.10.22 — pixel-aligned compact sidebar rail. */
+@media (min-width:900px) and (max-width:1120px) {
+  body.desktop-shell.browser-mode .desktop-sidebar {
+    box-sizing:border-box !important;padding-left:10px !important;padding-right:10px !important;
+    scrollbar-gutter:auto !important;
+    scrollbar-width:none !important;
+    -ms-overflow-style:none !important;
+  }
+  body.browser-mode .desktop-sidebar::-webkit-scrollbar { display:none !important;width:0 !important;height:0 !important; }
+  body.browser-mode .desktop-side-nav { width:100%;grid-template-columns:minmax(0,1fr);row-gap:8px;justify-self:stretch; }
+  body.browser-mode .desktop-side-nav > button {
+    box-sizing:border-box;width:100%;height:48px;min-height:48px;max-height:48px;
+    margin:0;padding:0;display:flex;align-items:center;justify-content:center;
+  }
+  body.browser-mode .desktop-side-nav > button > svg { display:block;margin:0;flex:0 0 19px; }
+  body.desktop-shell.browser-mode .desktop-side-nav button[data-screen="notifications"] .desktop-nav-unread-dot {
+    display:block !important;position:absolute !important;right:7px !important;top:7px !important;
+    margin:0 !important;flex:0 0 8px !important;pointer-events:none !important;
+  }
+}
+@media (min-width:1121px) {
+  body.desktop-shell.browser-mode.desktop-sidebar-collapsed .desktop-sidebar {
+    box-sizing:border-box !important;padding-left:10px !important;padding-right:10px !important;
+    scrollbar-gutter:auto !important;
+    scrollbar-width:none !important;
+    -ms-overflow-style:none !important;
+  }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-sidebar::-webkit-scrollbar { display:none !important;width:0 !important;height:0 !important; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-side-nav { width:100%;grid-template-columns:minmax(0,1fr);row-gap:8px;justify-self:stretch; }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-side-nav > button {
+    box-sizing:border-box;width:100%;height:48px;min-height:48px;max-height:48px;
+    margin:0;padding:0;display:flex;align-items:center;justify-content:center;
+  }
+  body.browser-mode.desktop-sidebar-collapsed .desktop-side-nav > button > svg { display:block;margin:0;flex:0 0 19px; }
+  body.desktop-shell.browser-mode.desktop-sidebar-collapsed .desktop-side-nav button[data-screen="notifications"] .desktop-nav-unread-dot {
+    display:block !important;position:absolute !important;right:7px !important;top:7px !important;
+    margin:0 !important;flex:0 0 8px !important;pointer-events:none !important;
+  }
+}
+
+
+/* v13.10.23 — remove the extra right gutter from the desktop content workspace. */
+@media (min-width:900px) {
+  body.desktop-shell.browser-mode #app { padding-right:0 !important; }
+}
+
+
+/* v13.10.26 — desktop interaction polish */
+@media (min-width:900px) {
+  body.browser-mode #toast { top:22px !important;left:50% !important;right:auto !important;bottom:auto !important;width:min(250px,calc(100vw - 40px)) !important;max-width:min(250px,calc(100vw - 40px)) !important;min-height:0 !important;padding:12px 18px !important;border:1px solid var(--line) !important;border-radius:14px !important;box-shadow:0 14px 44px rgba(0,0,0,.24) !important;transform:translate(-50%,-12px) !important; }
+  body.browser-mode #toast.show { transform:translate(-50%,0) !important; }
+  body.browser-mode .modal-content { padding: 0 clamp(16px, 3vw, 28px) clamp(16px, 3vw, 26px) !important; }
+  body.browser-mode .filter-modal .modal-content,
+  body.browser-mode .modal-filter .modal-content,
+  body.browser-mode .boost-modal .modal-content,
+  body.browser-mode .maintenance-modal .modal-content,
+  body.browser-mode .admin-user-modal .modal-content,
+  body.browser-mode .product-detail-modal .modal-content,
+  body.browser-mode .favorites-modal .modal-content { padding-bottom: clamp(16px, 3vw, 26px) !important; }
+  body.browser-mode .desktop-sidebar { overflow-x:hidden !important; }
+  body.browser-mode .desktop-sidebar::-webkit-scrollbar:horizontal { display:none !important;height:0 !important; }
+  body.browser-mode .admin-key-row, body.browser-mode .admin-key-row:active { transform:none !important; }
+}
+body.browser-mode ::-webkit-scrollbar-button { display:none !important;width:0 !important;height:0 !important;background:transparent !important; }
+body.browser-mode ::-webkit-scrollbar-button:vertical:decrement, body.browser-mode ::-webkit-scrollbar-button:vertical:increment,
+body.browser-mode ::-webkit-scrollbar-button:horizontal:decrement, body.browser-mode ::-webkit-scrollbar-button:horizontal:increment { display:none !important; }
+
+
+/* v13.10.27 — fixed modal insets, hidden scrollbars and stable desktop button press states. */
+@media (min-width:900px) {
+  body.browser-mode button:not(:disabled),
+  body.browser-mode [role="button"]:not([aria-disabled="true"]) {
+    transition:background-color .18s ease,color .18s ease,border-color .18s ease,
+      box-shadow .18s ease,opacity .18s ease,filter .18s ease !important;
+  }
+  body.browser-mode button:active:not(:disabled),
+  body.browser-mode [role="button"]:active:not([aria-disabled="true"]) {
+    transform:none !important;
+  }
+  body.browser-mode .modal-content,
+  body.browser-mode .filter-modal .modal-content,
+  body.browser-mode .modal-filter .modal-content,
+  body.browser-mode .boost-modal .modal-content,
+  body.browser-mode .maintenance-modal .modal-content,
+  body.browser-mode .admin-user-modal .modal-content,
+  body.browser-mode .product-detail-modal .modal-content,
+  body.browser-mode .favorites-share-composer .modal-content,
+  body.browser-mode .site-key-activation-modal .modal-content {
+    display:flex !important; flex-direction:column !important; min-height:0 !important;
+    overflow:hidden !important; box-sizing:border-box !important;
+    padding:24px clamp(16px,3vw,28px) clamp(16px,3vw,26px) !important;
+  }
+  body.browser-mode .modal-content > .modal-scroll-viewport {
+    position:relative !important; display:block !important; flex:1 1 auto !important;
+    min-height:0 !important; width:100% !important; max-width:100% !important;
+    overflow-x:hidden !important; overflow-y:auto !important; overscroll-behavior:contain !important;
+    -webkit-overflow-scrolling:touch !important; scrollbar-width:none !important;
+    -ms-overflow-style:none !important;
+  }
+  body.browser-mode .modal-content > .modal-scroll-viewport::-webkit-scrollbar,
+  body.browser-mode .modal-content > .modal-scroll-viewport::-webkit-scrollbar-thumb,
+  body.browser-mode .modal-content > .modal-scroll-viewport::-webkit-scrollbar-track,
+  body.browser-mode .modal-content > .modal-scroll-viewport::-webkit-scrollbar-button {
+    display:none !important; width:0 !important; height:0 !important; background:transparent !important;
+  }
+  body.browser-mode .modal-content::-webkit-scrollbar,
+  body.browser-mode .modal-content::-webkit-scrollbar-button,
+  body.browser-mode .modal-backdrop::-webkit-scrollbar { display:none !important;width:0 !important;height:0 !important; }
+  body.browser-mode .modal-backdrop,
+  body.browser-mode .modal-backdrop * { scrollbar-width:none !important;-ms-overflow-style:none !important; }
+  body.browser-mode .modal-backdrop *::-webkit-scrollbar,
+  body.browser-mode .modal-backdrop *::-webkit-scrollbar-thumb,
+  body.browser-mode .modal-backdrop *::-webkit-scrollbar-track,
+  body.browser-mode .modal-backdrop *::-webkit-scrollbar-button { display:none !important;width:0 !important;height:0 !important;background:transparent !important; }
+  body.browser-mode .card.admin-users,
+  body.browser-mode .card.admin-users .admin-users-scroll {
+    scrollbar-width:none !important;-ms-overflow-style:none !important;
+  }
+  body.browser-mode .card.admin-users::-webkit-scrollbar,
+  body.browser-mode .card.admin-users .admin-users-scroll::-webkit-scrollbar,
+  body.browser-mode .card.admin-users .admin-users-scroll::-webkit-scrollbar-button {
+    display:none !important;width:0 !important;height:0 !important;background:transparent !important;
+  }
+}
+body.browser-mode .admin-user-subscription-keys { margin:18px 0; padding-top:14px; border-top:1px solid var(--line); }
+body.browser-mode .admin-subscription-key-row { display:flex; flex-direction:column; gap:7px; min-width:0; padding:11px 12px; margin:7px 0; border:1px solid var(--line); border-radius:13px; background:color-mix(in srgb,var(--panel) 78%,transparent); }
+body.browser-mode .admin-subscription-key-head { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+body.browser-mode .admin-full-subscription-key { display:block; max-width:100%; overflow-wrap:anywhere; font:600 12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace; color:var(--text); }
+body.browser-mode .admin-subscription-key-dates { overflow-wrap:anywhere; }
+
+
+/* v13.10.27 — do not shrink buttons while the primary mouse button is held. */
+@media (min-width:900px) {
+  body.browser-mode :is(button,a,.button,.mini-button,.icon-button,[role="button"]) {
+    transition-property:background-color,color,border-color,box-shadow,opacity,filter !important;
+  }
+  body.browser-mode button:active:not(:disabled),
+  body.browser-mode a.button:active,
+  body.browser-mode .button:active,
+  body.browser-mode .mini-button:active,
+  body.browser-mode .icon-button:active,
+  body.browser-mode [role="button"]:active:not([aria-disabled="true"]) {
+    transform:none !important;
+  }
+}

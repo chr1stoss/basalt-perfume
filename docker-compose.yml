@@ -1,0 +1,72 @@
+services:
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: ${MYSQL_DATABASE:-basalt_dev}
+      MARIADB_USER: ${MYSQL_USER:-basalt}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD:-change_me_local_only}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change_root_local_only}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: web
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.2}
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: &db-env
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-basalt_dev}
+      MYSQL_USER: ${MYSQL_USER:-basalt}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change_me_local_only}
+      BOT_TOKEN: ${BOT_TOKEN:-}
+      ADMIN_IDS: ${ADMIN_IDS:-}
+      BOT_USERNAME: ${BOT_USERNAME:-}
+      DEVELOPER_USERNAME: ${DEVELOPER_USERNAME:-}
+      SITE_URL: ${SITE_URL:-http://localhost:8080}
+      WEBAPP_URL: ${WEBAPP_URL:-http://localhost:8080}
+      WEB_UPLOAD_STORAGE_DIR: /var/lib/basalt/uploaded_filed
+      PRICE_LIST_STORAGE_DIR: /var/lib/basalt/uploaded_filed
+      KEY_ENCRYPTION_SECRET: ${KEY_ENCRYPTION_SECRET:-local-dev-only-change-me}
+    ports:
+      - "8080:80"
+    volumes:
+      - ./public_html:/var/www/html
+      - ./public_html/config/database.example.php:/var/www/html/config/database.php:ro
+      - upload_storage:/var/lib/basalt/uploaded_filed
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: worker
+    profiles: ["worker"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      <<: *db-env
+      MAX_FILE_SIZE_MB: ${MAX_FILE_SIZE_MB:-20}
+      UPLOAD_STORAGE_DIR: /var/lib/basalt/uploaded_filed
+      WORKER_LOG_DIR: /var/lib/basalt/logs
+    volumes:
+      - upload_storage:/var/lib/basalt/uploaded_filed
+      - worker_logs:/var/lib/basalt/logs
+    command: ["sh", "-c", "while true; do python /opt/basalt/public_html/scripts/web_upload_worker.py; sleep 60; done"]
+
+volumes:
+  db_data:
+  upload_storage:
+  worker_logs:
