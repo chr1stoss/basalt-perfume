@@ -1,0 +1,22 @@
+*.py    linguist-detectable=true
+*.html  linguist-detectable=true
+*.css   linguist-detectable=true
+*.js    linguist-detectable=true
+*.sql   linguist-detectable=true
+
+**/__pycache__/**    linguist-vendored
+**/.venv/**          linguist-vendored
+**/venv/**           linguist-vendored
+**/site-packages/**  linguist-vendored
+**/node_modules/**   linguist-vendored
+
+private/**           linguist-vendored
+
+*.md    linguist-documentation
+*.txt   linguist-documentation
+*.json  linguist-documentation
+*.csv   linguist-documentation
+
+.htaccess        linguist-language=ApacheConf
+Dockerfile       linguist-language=Dockerfile
+Makefile         linguist-language=Makefile
