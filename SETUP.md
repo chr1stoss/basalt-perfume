@@ -291,7 +291,7 @@ SELECT VERSION(), @@version_comment, @@character_set_server,
        @@collation_server, @@sql_mode, @@max_allowed_packet;
 ```
 
-Также зафиксируйте в инвентаризации:
+Инвентаризация:
 
 - Sweb тариф/тип хостинга и DocumentRoot;
 - PHP handler (Apache module или PHP-FPM), PHP CLI version;
@@ -301,19 +301,3 @@ SELECT VERSION(), @@version_comment, @@character_set_server,
 - MySQL host/port (без пароля), DB engine/version;
 - абсолютные пути private worker, storage и logs;
 - Cloudflare Worker name, URL, deployed date/version (без secret values).
-
-## 8. Deploy checklist
-
-- [ ] Резервная копия web-root и БД.
-- [ ] Проверены `php -l`, pytest, JS syntax, pre-commit.
-- [ ] Production `config/database.php` сохранён отдельно, не заменён example.
-- [ ] `.env` Worker лежит вне public_html и имеет ограниченные права.
-- [ ] `uploaded_filed/` лежит вне DocumentRoot.
-- [ ] PHP `upload_max_filesize` и `post_max_size` не меньше 20M.
-- [ ] Cron worker запускается и пишет лог.
-- [ ] BotFather Mini App URL открывает `mobile/index.html`.
-- [ ] Browser OIDC работает через Cloudflare relay.
-- [ ] Проверены download individual и ZIP через браузер и Telegram WebApp.
-- [ ] Проверены ошибки 401/403/404/500 и clean desktop routes.
-
-**Не публикуйте** дампы БД, `.env`, bot token, Telegram Client Secret, MySQL password, `database.php`, private SSH keys или реальные логи с персональными данными.
