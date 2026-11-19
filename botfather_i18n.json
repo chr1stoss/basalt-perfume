@@ -1,0 +1,23 @@
+{
+  "lang_ru": {
+    "lang": "Русский",
+    "lang_id": "RU",
+    "name": "Basalt Perfume",
+    "info": "Прайс-листы, каталог парфюмерии и сравнение цен — в одном месте.",
+    "description": "Загружайте прайс-листы Excel и CSV — бот обработает файлы и соберёт единый каталог парфюмерии. Ищите товары по названию и бренду, сравнивайте цены, добавляйте позиции в избранное и получайте уведомления о подписке. Каталог и поиск доступны в WebApp."
+  },
+  "lang_en": {
+    "lang": "Engligh",
+    "lang_id": "EN",
+    "name": "Basalt Perfume",
+    "info": "Price lists, a perfume catalog, and price comparisons — all in one place.",
+    "description": "Upload Excel and CSV price lists — the bot will process the files and compile a unified perfume catalog. Search for products by name and brand, compare prices, add items to favorites, and receive subscription notifications. The catalog and search are available in WebApp."
+  },
+  "lang_kz": {
+    "lang": "Kazakh",
+    "lang_id": "KZ",
+    "name": "Basalt Perfume",
+    "info": "Бағалар парақтары, парфюмерия каталогы және бағаны салыстыру-бір жерде.",
+    "description": "Excel және CSV прейскуранттарын жүктеңіз-бот файлдарды өңдейді және парфюмерияның бірыңғай каталогын жинайды. Элементтерді атауы мен бренді бойынша іздеңіз, бағаларды салыстырыңыз, таңдаулыларға позициялар қосыңыз және жазылым туралы хабарламалар алыңыз. Каталог пен іздеу webapp-та қол жетімді."
+  }
+}
