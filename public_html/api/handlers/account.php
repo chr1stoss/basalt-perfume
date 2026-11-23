@@ -53,7 +53,8 @@ if ($action === 'overview' || $action === 'me') {
     // A no-role or expired user only needs the subscription gate. Do not query
     // profile settings, catalogue counts, files, notifications or favorites.
     $sub = subscription_for($tgId);
-    if (empty($auth['is_admin']) && ($auth['role'] === 'none' || !$sub || empty($sub['active']))) {
+    $buyerSubscriptionOptional = $auth['role'] === 'buyer' && !app_setting_enabled($pdo, 'buyer_subscription_required', true);
+    if (empty($auth['is_admin']) && ($auth['role'] === 'none' || (!$buyerSubscriptionOptional && (!$sub || empty($sub['active']))))) {
         respond(true, array(
             'profile' => array('tg_id'=>(int)$tgId, 'role'=>$auth['role'], 'is_blocked'=>false, 'ban_active'=>false),
             'role'=>$auth['role'], 'subscription'=>$sub,

@@ -49,7 +49,8 @@ try {
     }
     // Users without a role or active subscription may only read the minimum account
     // overview needed to render the subscription gate. Do not expose catalogue/settings APIs.
-    if (empty($auth['is_admin']) && !in_array($action, array('overview','me','cache_avatar','activate_subscription_key','session_sync'), true)) {
+    $buyerSubscriptionOptional = $auth['role'] === 'buyer' && !app_setting_enabled(db(), 'buyer_subscription_required', true);
+    if (empty($auth['is_admin']) && !$buyerSubscriptionOptional && !in_array($action, array('overview','me','cache_avatar','activate_subscription_key','session_sync'), true)) {
         $gateSubscription = subscription_for($tgId);
         if ($auth['role'] === 'none' || !$gateSubscription || empty($gateSubscription['active'])) {
             respond(false, array('error'=>'subscription_required','message'=>'Для доступа к приложению купите или продлите подписку в Telegram-боте.'), 403);

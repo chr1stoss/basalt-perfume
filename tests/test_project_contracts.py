@@ -145,3 +145,40 @@ def test_account_overview_handler_remains_inside_php():
     assert "if ($action === 'overview' || $action === 'me')" in account
     assert "?>" not in account
     assert account.rstrip().endswith("}")
+
+
+@pytest.mark.static
+def test_buyer_subscription_setting_is_optional_only_for_buyers():
+    auth = (PUBLIC / "api" / "lib" / "auth.php").read_text(encoding="utf-8")
+    router = (PUBLIC / "api" / "router.php").read_text(encoding="utf-8")
+    account = (PUBLIC / "api" / "handlers" / "account.php").read_text(encoding="utf-8")
+    admin = (PUBLIC / "api" / "handlers" / "admin.php").read_text(encoding="utf-8")
+    app = (PUBLIC / "assets" / "app.js").read_text(encoding="utf-8")
+    assert "buyer_subscription_required" in auth
+    assert "if (!$isAdmin && $role === 'none' && !app_setting_enabled($pdo, 'buyer_subscription_required', true))" in auth
+    assert "UPDATE users SET role='buyer' WHERE tg_id=? AND role='none'" in auth
+    assert "buyerSubscriptionOptional = $auth['role'] === 'buyer'" in router
+    assert "$auth['role'] === 'buyer' && !app_setting_enabled($pdo, 'buyer_subscription_required', true)" in account
+    assert "buyer_subscription_required" in admin
+    assert "buyerSubscriptionToggle" in app
+    assert "if(!buyerSubscriptionOptional)html+=" in app
+
+
+@pytest.mark.static
+def test_browser_auth_errors_use_toast_and_login_spacing_is_compact():
+    app = (PUBLIC / "assets" / "app.js").read_text(encoding="utf-8")
+    styles = (PUBLIC / "assets" / "css" / "visual-system.css").read_text(encoding="utf-8")
+    assert "function browserLoginDiagnostic(message){\n    toast(message" in app
+    assert "browser-auth-alert-slot" in app
+    assert "diagnosticText+(authError==='token_exchange_failed'" in app
+    assert "margin: 0 0 80px" not in styles
+    assert "body.external-open .browser-auth-toast.show" in styles
+
+
+@pytest.mark.static
+def test_unrecognized_xlsx_does_not_persist_empty_product_result():
+    parser = (ROOT / "private" / "basalt-site-worker" / "services" / "parser" / "price_list.py").read_text(encoding="utf-8")
+    worker = (PUBLIC / "scripts" / "web_upload_worker.py").read_text(encoding="utf-8")
+    assert "if not data['products']:" in parser
+    assert "В файле не распознано ни одной товарной строки" in parser
+    assert "process_web_uploaded_price_file" in worker

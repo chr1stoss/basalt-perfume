@@ -11,8 +11,8 @@ header('X-Content-Type-Options: nosniff');
           content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#111111">
     <title>Basalt Perfume | Главная</title>
-    <link rel="stylesheet" href="/assets/app.css?v=65">
-    <link rel="stylesheet" href="/assets/css/visual-system.css?v=76">
+    <link rel="stylesheet" href="/assets/app.css?v=66">
+    <link rel="stylesheet" href="/assets/css/visual-system.css?v=77">
     <link rel="stylesheet" href="/assets/css/modals.css?v=15">
     <link rel="stylesheet" href="/assets/css/preview.css?v=12">
     <link rel="icon" href="/favicon.ico?v=138" type="image/x-icon">
@@ -153,7 +153,7 @@ header('X-Content-Type-Options: nosniff');
 <script src="/assets/js/effects.js?v=4"></script>
 <script src="/assets/js/features/preview.js?v=3"></script>
 <!-- Basalt WebApp assets are shipped as WebP/JPEG; no PNG assets are required. -->
-<script src="/assets/app.js?v=122"></script>
+<script src="/assets/app.js?v=123"></script>
 <script>
     (function () {
         // If a script never loads or fails before bootstrapping the UI, replace the static

@@ -12,6 +12,7 @@ function browser_features($pdo) {
     return array(
         'browser_access_enabled' => app_setting_enabled($pdo, 'browser_access_enabled', false),
         'session_sync_enabled' => app_setting_enabled($pdo, 'session_sync_enabled', true),
+        'buyer_subscription_required' => app_setting_enabled($pdo, 'buyer_subscription_required', true),
         'web_price_upload_enabled' => true,
         'site_key_activation_enabled' => true
     );
@@ -153,6 +154,17 @@ function resolve_user_auth($tgId, $userData = null) {
     if ($isAdmin && in_array((string)$tgId, $adminIds, true)) {
         $pdo->prepare('INSERT IGNORE INTO admins(tg_id) VALUES(?)')->execute(array((int)$tgId));
         $pdo->prepare("UPDATE users SET role='admin' WHERE tg_id=?")->execute(array((int)$tgId));
+    }
+    // Telegram registration has no role picker: new users normally start as `none`.
+    // When buyer subscriptions are disabled, turn an unassigned non-admin account
+    // into a buyer so a first-time user can actually enter without activating a key.
+    // Explicit seller/buyer roles and all administrator identities are preserved.
+    if (!$isAdmin && $role === 'none' && !app_setting_enabled($pdo, 'buyer_subscription_required', true)) {
+        $pdo->prepare("UPDATE users SET role='buyer' WHERE tg_id=? AND role='none'")->execute(array((int)$tgId));
+        $roleStmt = $pdo->prepare('SELECT role FROM users WHERE tg_id=? LIMIT 1');
+        $roleStmt->execute(array((int)$tgId));
+        $role = strtolower(trim((string)$roleStmt->fetchColumn()));
+        if ($role === '') $role = 'none';
     }
     if (!$isAdmin && !in_array($role, array('seller','buyer','none'), true)) $role = 'none';
     return array('tg_id'=>(int)$tgId, 'user'=>is_array($userData) ? $userData : array('id'=>(int)$tgId), 'is_admin'=>$isAdmin, 'role'=>$isAdmin ? 'admin' : $role);
@@ -478,9 +490,11 @@ function require_active_subscription($tgId) {
     // Administrators can use the control room and catalogue without a paid user subscription.
     $adminIds = array_filter(array_map('trim', explode(',', (string)($config['admin_ids'] ?? ''))));
     if (in_array((string)$tgId, $adminIds, true)) return;
-    $adminCheck = db()->prepare("SELECT (role='admin' OR EXISTS(SELECT 1 FROM admins a WHERE a.tg_id=users.tg_id)) AS allowed FROM users WHERE tg_id=? LIMIT 1");
+    $adminCheck = db()->prepare("SELECT role,(role='admin' OR EXISTS(SELECT 1 FROM admins a WHERE a.tg_id=users.tg_id)) AS allowed FROM users WHERE tg_id=? LIMIT 1");
     $adminCheck->execute(array((int)$tgId));
-    if ((int)$adminCheck->fetchColumn() === 1) return;
+    $accessUser = $adminCheck->fetch();
+    if ($accessUser && (int)$accessUser['allowed'] === 1) return;
+    if ($accessUser && $accessUser['role'] === 'buyer' && !app_setting_enabled(db(), 'buyer_subscription_required', true)) return;
     $sub = subscription_for($tgId);
     if (!$sub || empty($sub['active'])) respond(false, array('error'=>'subscription_required','message'=>'Для этого раздела нужна активная подписка. Отправьте /start боту и активируйте ключ.'), 403);
 }

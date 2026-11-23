@@ -339,3 +339,10 @@ html[data-bp-ui-mode="desktop-browser"] body.telegram-shell { visibility: hidden
     white-space:nowrap !important;
   }
 }
+
+/* v13.10.32 — remove vertical spacing around browser access settings dividers on mobile only. */
+@media (max-width: 899px) {
+  body:is(.telegram-shell,.mobile-browser-shell) .divider.admin-browser-settings-divider {
+    margin: 0 !important;
+  }
+}

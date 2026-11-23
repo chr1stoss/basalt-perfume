@@ -251,7 +251,7 @@ body.preview-readonly .bottom-nav{display:grid}
 .web-upload-note{margin:10px 0 0;line-height:1.5}
 .browser-cookie-notice{display:flex;align-items:flex-start;gap:10px;margin:15px 0 2px;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);font-size:11px;line-height:1.55;color:var(--muted);text-align:left}
 .browser-cookie-notice .svg-icon{width:18px;height:18px;flex:0 0 18px;margin-top:1px}
-.browser-auth-card .telegram-link{margin-top:20px;min-height:52px}
+.browser-auth-card .telegram-link{margin-top:0;min-height:52px}
 .browser-auth-card .browser-login-setup{margin-top:20px;padding:13px 15px;border:1px solid var(--border);border-radius:12px;background:var(--surface);line-height:1.5}
 .browser-auth-card .external-landing-copy{width:100%}
 .browser-login-diagnostic{margin:16px 0 4px;padding:13px 14px;border:1px solid rgba(235,110,95,.42);border-radius:13px;background:rgba(190,65,55,.09);color:var(--text);font-size:12px;line-height:1.55;text-align:left}

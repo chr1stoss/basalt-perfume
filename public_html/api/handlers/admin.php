@@ -330,13 +330,15 @@ if ($action === 'save_browser_features') {
     admin_required($auth);
     $browserAccess = !empty($input['browser_access_enabled']);
     $sessionSync = array_key_exists('session_sync_enabled', $input) ? !empty($input['session_sync_enabled']) : app_setting_enabled($pdo, 'session_sync_enabled', true);
+    $buyerSubscriptionRequired = array_key_exists('buyer_subscription_required', $input) ? !empty($input['buyer_subscription_required']) : app_setting_enabled($pdo, 'buyer_subscription_required', true);
     $up = $pdo->prepare('INSERT INTO app_settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)');
     $pdo->beginTransaction();
     try {
         $up->execute(array('browser_access_enabled',$browserAccess ? '1' : '0'));
         $up->execute(array('session_sync_enabled',$sessionSync ? '1' : '0'));
+        $up->execute(array('buyer_subscription_required',$buyerSubscriptionRequired ? '1' : '0'));
         $log = $pdo->prepare('INSERT INTO admin_logs(admin_tg_id,action,details) VALUES(?,?,?)');
-        $log->execute(array($tgId,'save_browser_features','browser_access='.(int)$browserAccess.';session_sync='.(int)$sessionSync));
+        $log->execute(array($tgId,'save_browser_features','browser_access='.(int)$browserAccess.';session_sync='.(int)$sessionSync.';buyer_subscription_required='.(int)$buyerSubscriptionRequired));
         $pdo->commit();
     } catch (Throwable $e) { if ($pdo->inTransaction()) $pdo->rollBack(); throw $e; }
     respond(true,array('browser_features'=>browser_features($pdo)),200);
