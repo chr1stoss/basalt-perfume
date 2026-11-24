@@ -31,7 +31,6 @@ class Settings:
     mysql_pool_size: int = _int_env("MYSQL_POOL_SIZE", 2, 1, 4)
     mysql_pool_minsize: int = _int_env("MYSQL_POOL_MINSIZE", 1, 0, 2)
     max_concurrent_files: int = _int_env("MAX_CONCURRENT_FILES", 1, 1, 1)
-    max_file_size_mb: int = _int_env("MAX_FILE_SIZE_MB", 20, 1, 1000)
     log_level: str = os.getenv("LOG_LEVEL", "INFO").strip().upper()
     upload_storage_dir: Path = Path(
         os.getenv("UPLOAD_STORAGE_DIR", str(HOME_ROOT / "uploaded_filed"))

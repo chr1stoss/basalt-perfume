@@ -170,37 +170,3 @@ async def persist_parsed_file(tg_id: int, filename: str, file_path: Path, size_b
                     raise
                 await asyncio.sleep((0.25 * (2 ** attempt)) + random.uniform(0.05, 0.3))
                 log.warning('Retrying price-list DB transaction after MySQL lock error %s (attempt %s/4)', errno, attempt + 2)
-
-
-
-async def process_web_uploaded_price_file(
-    tg_id: int, filename: str, file_path: Path, size_bytes: int, price_list_id: int
-) -> dict[str, Any]:
-    """Parse and persist an already-created website price_lists row.
-
-    The parser engine and persistence transaction are the same implementation used
-    by the Telegram application. This entry point deliberately does not start or
-    call Telegram services.
-    """
-    from database.connection import pool
-
-    try:
-        if not file_path.is_file():
-            raise FileNotFoundError(f"Загруженный файл не найден: {file_path.name}")
-        data = await asyncio.to_thread(_load_engine_and_parse, file_path, filename)
-        stats = await persist_parsed_file(tg_id, filename, file_path, size_bytes, data, price_list_id)
-        return {"ok": True, "filename": filename, "stats": stats}
-    except Exception as exc:
-        log.exception("Failed to process website upload %s for tg_id=%s", filename, tg_id)
-        try:
-            async with pool().acquire() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute("UPDATE price_lists SET status='error' WHERE id=%s", (int(price_list_id),))
-                    await cur.execute(
-                        "INSERT INTO parse_errors(tg_id,file_id,error_code,details) VALUES(%s,%s,%s,%s)",
-                        (int(tg_id), int(price_list_id), "file_parse_error", str(exc)[:2000]),
-                    )
-                await conn.commit()
-        except Exception:
-            log.exception("Could not store website parse error for price_list_id=%s", price_list_id)
-        return {"ok": False, "filename": filename, "technical_error": str(exc)}

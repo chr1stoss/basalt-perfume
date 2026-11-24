@@ -35,7 +35,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Optional
 
-PARSER_VERSION = "2.2.0"
+PARSER_VERSION = "2.2.1"
 
 # ---------------------------------------------------------------------------
 # Normalization helpers
@@ -602,6 +602,22 @@ TOTAL_RE = re.compile(r"(?i)^\s*(?:итого|всего|total|сумма(?:\s+�
 SECTION_SKIP_TERMS = re.compile(r"(?i)\b(?:edp|edt|edc|parfum|perfume|туалетн\w*\s+вод\w*|парфюм\w*\s+вод\w*|духи|лосион|лосьон|крем|gel|гель|shampoo|шампунь|mascara|тушь|set|набор|ml|мл)\b")
 SECTION_CATEGORY_PREFIXES = ("тушь", "помада", "крем", "шампунь", "маска", "блеск", "духи", "косметика", "спрей")
 
+# A workbook without recognizable Name + Price headers must prove that it contains
+# actual perfume/cosmetics catalogue rows before it can be imported.
+PRODUCT_IDENTITY_RE = re.compile(
+    r"(?i)\b(?:edp|edt|edc|extrait|parfum|perfume|fragrance|cologne|eau\s+de|"
+    r"tester|sample|miniature|набор|парфюм\w*|духи|туалетн\w*\s+вод\w*|"
+    r"парфюмерн\w*\s+вод\w*|маскар\w*|mascara|тушь|lipstick|помад\w*|"
+    r"shampoo|шампун\w*|крем\w*|cream|body\s+lotion|лосьон\w*|gel|гель|"
+    r"маск\w*|mask|conditioner|кондиционер\w*|serum|сыворотк\w*|foundation|"
+    r"тональн\w*|powder|пудр\w*|blush|румян\w*|deodorant|дезодорант\w*|"
+    r"aftershave|бальзам\w*|\d+(?:[.,]\d+)?\s*(?:ml|мл|oz|fl\.?\s*oz|г|гр|g)\b)"
+)
+
+
+class InvalidPriceListError(ValueError):
+    """Raised when an uploaded workbook is not a recognizable product price list."""
+
 
 def _header_score(cells: list[Any]) -> tuple[int, set[str]]:
     hits: set[str] = set()
@@ -1004,6 +1020,89 @@ def _row_has_title(cells: list[Any], roles: dict[str,int]) -> Optional[str]:
     return max(strings, key=len)
 
 
+def _has_catalog_product_identity(title: Any, cells: list[Any], roles: dict[str, int],
+                                  rules: dict[str, Any], index: BrandIndex) -> bool:
+    """Return True only when a title has recognizable perfume/cosmetics evidence."""
+    text = normalize_text(title)
+    if not text:
+        return False
+    if PRODUCT_IDENTITY_RE.search(text):
+        return True
+    if detect_type(text, rules) or extract_volumes(text, rules):
+        return True
+    if locate_brand_in_title(text, index)[0]:
+        return True
+
+    # Structured sheets may store brand/type/volume in separate columns.
+    brand_value = value_at(cells, roles.get("brand"))
+    if not is_empty(brand_value):
+        brand_text = normalize_text(brand_value)
+        if resolve_section_brand(brand_text, index) or locate_brand_in_title(brand_text, index)[0]:
+            return True
+    type_value = value_at(cells, roles.get("type"))
+    if not is_empty(type_value) and detect_type(normalize_text(type_value), rules):
+        return True
+    volume_value = value_at(cells, roles.get("volume"))
+    if not is_empty(volume_value) and extract_volumes(normalize_text(volume_value), rules):
+        return True
+    return False
+
+
+def _price_list_sheet_plan(records: list[dict[str, Any]], rules: dict[str, Any],
+                           index: BrandIndex) -> dict[str, Any]:
+    """Validate one worksheet and return the exact column map used for parsing.
+
+    Explicit Name + Price headers are the strongest signal. Without both headers,
+    inferred columns are accepted only when at least two rows have a recognizable
+    perfume/cosmetics identity AND an actual parseable price. This prevents date,
+    count, and statistics columns from being mistaken for prices.
+    """
+    header_idx = detect_header(records)
+    if header_idx is not None:
+        header_roles = map_header(records[header_idx]["cells"])
+        roles = dict(header_roles)
+        inferred = _infer_roles(records, header_idx + 1)
+        roles.setdefault("name", inferred.get("name"))
+        roles.setdefault("price", inferred.get("price"))
+        data_start = header_idx + 1
+        trusted_header = "name" in header_roles and "price" in header_roles
+    else:
+        roles = _infer_roles(records, 0)
+        data_start = 0
+        trusted_header = False
+
+    paired_price_rows = 0
+    product_price_rows = 0
+    for record in records[data_start:]:
+        cells = record["cells"]
+        title = _row_has_title(cells, roles)
+        if not title:
+            continue
+        price = parse_price(value_at(cells, roles.get("price")))
+        if price is None:
+            continue
+        paired_price_rows += 1
+        if _has_catalog_product_identity(title, cells, roles, rules, index):
+            product_price_rows += 1
+
+    if trusted_header:
+        accepted = paired_price_rows >= 1
+    else:
+        # Two independent product rows make inferred columns credible. A random
+        # report with numeric monthly/count columns will not pass this gate.
+        accepted = product_price_rows >= 2
+
+    return {
+        "accepted": accepted,
+        "header_idx": header_idx,
+        "roles": roles,
+        "data_start": data_start,
+        "trusted_header": trusted_header,
+        "paired_price_rows": paired_price_rows,
+        "product_price_rows": product_price_rows,
+    }
+
+
 def classify_source_row(cells: list[Any], roles: dict[str,int], current_section: Optional[str], rules: dict[str,Any]) -> tuple[str, Optional[str]]:
     nonempty = [normalize_text(v) for v in cells if not is_empty(v)]
     if not nonempty: return "blank", None
@@ -1368,22 +1467,46 @@ def process_workbook_rows(workbooks: list[tuple[str,str,list[list[Any]]]], rules
     source_rows=[]; products=[]; components=[]; price_lists=[]; stats={"files":{},"status_counts":Counter()}
     file_ids={}
     next_source_id=1; next_product_id=1
+
+    # Validate sheets before constructing any product rows. Non-price-list sheets
+    # in a multi-sheet workbook are skipped; a file with no valid sheet is rejected.
+    prepared=[]
+    seen_files=[]
+    accepted_files=set()
     for file_name,sheet_name,matrix in workbooks:
+        if file_name not in seen_files:
+            seen_files.append(file_name)
+        records=[{"row_number":i+1,"cells":[json_safe(v) for v in cells]} for i,cells in enumerate(matrix)]
+        plan=_price_list_sheet_plan(records,rules,index)
+        if plan["accepted"]:
+            prepared.append((file_name,sheet_name,records,plan))
+            accepted_files.add(file_name)
+
+    rejected_files=[name for name in seen_files if name not in accepted_files]
+    if rejected_files:
+        names=", ".join(rejected_files[:3])
+        if len(rejected_files)>3:
+            names += f" и ещё {len(rejected_files)-3}"
+        raise InvalidPriceListError(
+            f"Файл «{names}» не распознан как прайс-лист. Не найдены подтверждённые заголовки «Наименование» и «Цена» "
+            "или минимум две товарные строки парфюмерии/косметики с числовыми ценами. "
+            "Документы, отчёты и таблицы статистики не импортируются как товары."
+        )
+
+    for file_name,sheet_name,records,plan in prepared:
         if file_name not in file_ids:
             file_ids[file_name]=len(file_ids)+1
             price_lists.append({"id":file_ids[file_name],"filename":file_name,"supplier_name":Path(file_name).stem,
                                 "imported_at":datetime.now().strftime("%Y-%m-%d %H:%M:%S"),"parser_version":PARSER_VERSION})
-        records=[{"row_number":i+1,"cells":[json_safe(v) for v in cells]} for i,cells in enumerate(matrix)]
-        header_idx=detect_header(records)
-        if header_idx is not None:
-            roles=map_header(records[header_idx]["cells"])
-            data_start=header_idx+1
-        else:
-            roles=_infer_roles(records,0); data_start=0
-        # Keep only strongly inferred columns when header wasn't found.
+        header_idx=plan["header_idx"]
+        roles=plan["roles"]
+        trusted_header=plan["trusted_header"]
         file_stat=stats["files"].setdefault(file_name,{"sheets":{},"physical_rows":0,"products":0,"components":0,"review":0,"suspicious_prices":0})
         file_stat["sheets"][sheet_name]={"header_row":header_idx+1 if header_idx is not None else None,
-                                          "column_roles":roles,"physical_rows":len(records)}
+                                          "column_roles":roles,"physical_rows":len(records),
+                                          "price_list_validation":{"paired_price_rows":plan["paired_price_rows"],
+                                                                    "product_price_rows":plan["product_price_rows"],
+                                                                    "trusted_header":trusted_header}}
         current_section=None; current_section_brand=None
         sheet_stat={"products":0,"components":0,"review":0,"suspicious_prices":0}
         for rec in records:
@@ -1392,6 +1515,10 @@ def process_workbook_rows(workbooks: list[tuple[str,str,list[list[Any]]]], rules
                 status="header"; title=None; reason=None
             else:
                 status,title=classify_source_row(cells,roles,current_section,rules); reason=None
+                # In a sheet whose columns were inferred, don't promote arbitrary
+                # labels/notes into products just because other cells contain numbers.
+                if status=="candidate" and not trusted_header and not _has_catalog_product_identity(title,cells,roles,rules,index):
+                    status="preamble"; title=None
             raw_price=to_text(value_at(cells,roles.get("price")))
             prod_id=None
             if status=="section_header" and title:
